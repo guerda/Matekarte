@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_locate_me"
+        android:icon="@drawable/ic_action_location_searching"
+        android:showAsAction="always"
+        android:title="@string/locate_me"/>
+    <item
+        android:id="@+id/action_refresh_dealers"
+        android:icon="@drawable/ic_action_refresh"
+        android:showAsAction="always"
+        android:title="@string/refresh_dealers"/>
+</menu>
