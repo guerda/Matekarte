@@ -7,5 +7,5 @@ android:
     - extra-android-support
   licenses:
     - android-sdk-license-5be876d5
-  script:
-    - ./gradlew build -q
+script:
+  - ./gradlew build -q
