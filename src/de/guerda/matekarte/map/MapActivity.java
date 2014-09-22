@@ -1,4 +1,6 @@
-package de.guerda.matekarte;
+package de.guerda.matekarte.map;
+
+import de.guerda.matekarte.*;
 
 import java.io.IOException;
 import java.io.InputStream;
