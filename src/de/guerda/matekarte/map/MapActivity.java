@@ -1,6 +1,13 @@
 package de.guerda.matekarte.map;
 
-import de.guerda.matekarte.*;
+import de.guerda.matekarte.BuildConfig;
+import de.guerda.matekarte.R;
+import de.guerda.matekarte.dealers.Dealer;
+import de.guerda.matekarte.dealers.DealersList;
+import de.guerda.matekarte.dealers.DealersDownloadTask;
+import de.guerda.matekarte.dealers.Radius;
+
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -89,7 +96,6 @@ public class MapActivity extends Activity implements LocationListener, LoaderCal
     mMyLocationOverlay.setDrawAccuracyEnabled(true);
 
     mMap.getOverlays().add(mMyLocationOverlay);
-     dealersDownloadTask = new DealersDownloadTask(getApplicationContext());
 
     resourceProxy = new DefaultResourceProxyImpl(getApplicationContext());
 
@@ -101,7 +107,6 @@ public class MapActivity extends Activity implements LocationListener, LoaderCal
   private void loadDealersInBackground() {
     DealersDownloadTask tmpInitLoader = (DealersDownloadTask) getLoaderManager().initLoader(0, null, this);
     Location pLoc = mMyLocationOverlay.getLastFix();
-    tmpInitLoader.setLocation(pLoc);
     tmpInitLoader.forceLoad();
   }
 
@@ -230,7 +235,11 @@ public class MapActivity extends Activity implements LocationListener, LoaderCal
 
   public Loader<DealersList> onCreateLoader(int aId, Bundle aArgs) {
     Log.i(LOGTAG, "onCreateLoader");
-    return new DealersDownloadTask(getApplicationContext());
+    Location tmpLocation = new Location("fake");
+    tmpLocation.setLatitude(0f);
+    tmpLocation.setLongitude(0f);
+
+    return new DealersDownloadTask(getApplicationContext(), tmpLocation, Radius.ONE_KILOMETER);
 
   }
 

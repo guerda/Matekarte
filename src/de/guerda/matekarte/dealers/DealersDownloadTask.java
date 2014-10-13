@@ -17,6 +17,7 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Locale;
 
 import de.janmatuschek.GeoLocation;
 
@@ -98,7 +99,7 @@ public class DealersDownloadTask extends AsyncTaskLoader<DealersList> {
         //1: MINLON --> left
         //2: MAXLAT --> top
         //3: MAXLON --> right
-        return String.format("?b=%f&l=%f&t=%f&r=%f", aBoundingBox[0], aBoundingBox[1], aBoundingBox[2], aBoundingBox[3]);
+        return String.format(Locale.US, "?b=%f&l=%f&t=%f&r=%f", aBoundingBox[0], aBoundingBox[1], aBoundingBox[2], aBoundingBox[3]);
     }
 
 }
