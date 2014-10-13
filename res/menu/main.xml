@@ -1,13 +1,14 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:matekarte="http://schemas.android.com/apk/res-auto" >
 
     <item
         android:id="@+id/action_locate_me"
         android:icon="@drawable/ic_action_location_searching"
-        android:showAsAction="always"
+        matekarte:showAsAction="ifRoom"
         android:title="@string/action_locate_me"/>
     <item
         android:id="@+id/action_refresh_dealers"
         android:icon="@drawable/ic_action_refresh"
-        android:showAsAction="always"
+        matekarte:showAsAction="ifRoom"
         android:title="@string/action_refresh_dealers"/>
 </menu>
