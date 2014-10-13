@@ -1,6 +1,5 @@
 package de.guerda.matekarte.list;
 
-<<<<<<< HEAD
 import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.Context;
@@ -203,5 +202,4 @@ public class ListActivity extends Activity {
     }
   }
 
->>>>>>> 59d8fc66f4822b4b906ee8fe3f82717871cf5fc7
 }

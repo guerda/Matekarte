@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<<<<<<< HEAD
     <string name="app_name">Matekarte</string>
 
     <string name="title_activity_details">Mate dealer\'s details</string>
@@ -11,11 +10,4 @@
     <string name="action_locate_me">Locate Me</string>
     <string name="action_settings">Settings</string>
     <string name="action_refresh_dealers">Refresh dealers</string>
-=======
-	<string name="app_name">Matekarte</string>
-	<string name="locate_me">Locate Me</string>
-	<string name="refresh_dealers">Refresh Dealers</string>
-        <string name="list_activity_name">List Mate Dealers</string>
->>>>>>> 59d8fc66f4822b4b906ee8fe3f82717871cf5fc7
-
 </resources>
