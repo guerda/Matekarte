@@ -1,7 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="app_name">Matekarte</string>
-	<string name="locate_me">Locate Me</string>
-	<string name="refresh_dealers">Refresh Dealers</string>
+    <string name="app_name">Matekarte</string>
+
+    <string name="title_activity_details">Mate dealer\'s details</string>
+    <string name="title_activity_list">List of Mate dealers</string>
+    <string name="title_activity_map">Map of Mate dealers</string>
+
+    <string name="action_locate_me">Locate Me</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_refresh_dealers">Refresh dealers</string>
 
 </resources>

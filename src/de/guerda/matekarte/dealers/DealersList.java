@@ -1,4 +1,4 @@
-package de.guerda.matekarte;
+package de.guerda.matekarte.dealers;
 
 import java.util.List;
 

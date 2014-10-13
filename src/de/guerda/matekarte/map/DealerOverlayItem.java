@@ -1,4 +1,4 @@
-package de.guerda.matekarte;
+package de.guerda.matekarte.map;
 
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.overlay.OverlayItem;

@@ -4,10 +4,10 @@
         android:id="@+id/action_locate_me"
         android:icon="@drawable/ic_action_location_searching"
         android:showAsAction="always"
-        android:title="@string/locate_me"/>
+        android:title="@string/action_locate_me"/>
     <item
         android:id="@+id/action_refresh_dealers"
         android:icon="@drawable/ic_action_refresh"
         android:showAsAction="always"
-        android:title="@string/refresh_dealers"/>
+        android:title="@string/action_refresh_dealers"/>
 </menu>
