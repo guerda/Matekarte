@@ -1,15 +1,20 @@
 package de.guerda.matekarte.details;
 
+import android.net.Uri;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import de.guerda.matekarte.R;
 
 public class DetailsActivity extends Activity {
+
+    private String dealerText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,9 +22,9 @@ public class DetailsActivity extends Activity {
         setContentView(R.layout.activity_detail);
 
         Intent tmpIntent = getIntent();
-        String tmpText = tmpIntent.getStringExtra("message");
+        dealerText = tmpIntent.getStringExtra("message");
         TextView tmpTextView = (TextView) findViewById(R.id.detail_text);
-        tmpTextView.setText(tmpText);
+        tmpTextView.setText(dealerText);
     }
 
 
@@ -36,10 +41,15 @@ public class DetailsActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onAddressClick(View aView) {
+      Intent intent = new Intent(Intent.ACTION_VIEW);
+      intent.setData(Uri.parse(dealerText));
+      if (intent.resolveActivity(getPackageManager()) != null) {
+        startActivity(intent);
+      }
     }
 
 

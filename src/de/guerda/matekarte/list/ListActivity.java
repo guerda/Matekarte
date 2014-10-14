@@ -13,6 +13,7 @@ import android.content.Loader;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,33 +34,27 @@ import de.guerda.matekarte.dealers.DealersList;
 import de.guerda.matekarte.dealers.Radius;
 import de.guerda.matekarte.details.DetailsActivity;
 
-public class ListActivity extends Activity implements LoaderManager.LoaderCallbacks<DealersList> {
+public class ListActivity extends Activity implements LoaderManager.LoaderCallbacks<DealersList>, LocationListener {
 
     private static final String LOGTAG = "Matekarte.ListActivity";
     private List<Dealer> dealers;
     private ArrayAdapter<Dealer> listAdapter;
     private String bestProvider;
-    private LocationManager mLocationManager;
-
-    private LocationManager getLocationManager() {
-        if (this.mLocationManager == null)
-            this.mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        return this.mLocationManager;
-    }
-
-    private void initLocation() {
-        //getLocationManager().requestLocationUpdates(bestProvider, 2000, 20, this);
-    }
+    private LocationManager locationManager;
+    private Location lastLocation;
 
     @Override
     protected void onCreate(Bundle aSavedInstanceState) {
         super.onCreate(aSavedInstanceState);
         setContentView(R.layout.activity_list);
 
+        lastLocation = null;
+
         // Initialize location requests
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         bestProvider = getLocationManager().getBestProvider(criteria, true);
+        initLocation();
 
         ListView tmpListView = (ListView) findViewById(R.id.list_mate_dealers);
 
@@ -77,9 +73,19 @@ public class ListActivity extends Activity implements LoaderManager.LoaderCallba
         loadDealersInBackground();
     }
 
+    @Override
+    protected void onPause() {
+      getLocationManager().removeUpdates(this);
+      super.onPause();
+    }
+
+
     private void loadDealersInBackground() {
-        DealersDownloadTask tmpInitLoader = (DealersDownloadTask) getLoaderManager().initLoader(0, null, this);
-        tmpInitLoader.forceLoad();
+        initLocation();
+        DealersDownloadTask tmpLoader = (DealersDownloadTask) getLoaderManager().initLoader(0, null, this);
+        if(tmpLoader != null) {
+          tmpLoader.forceLoad();
+        }
     }
 
     private void handleListViewItemOnItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -93,11 +99,22 @@ public class ListActivity extends Activity implements LoaderManager.LoaderCallba
 
     @Override
     public Loader<DealersList> onCreateLoader(int id, Bundle args) {
-        Location tmpLocation = new Location("fake");
-        tmpLocation.setLatitude(51.2168);
-        tmpLocation.setLongitude(6.7959);
-        Log.i(LOGTAG, "onCreateLoader  " + tmpLocation + " ONE KILOMETER");
-        return new DealersDownloadTask(getApplicationContext(), tmpLocation, Radius.ONE_KILOMETER);
+        if(lastLocation == null) {
+          Toast.makeText(getApplicationContext(), "No location found", Toast.LENGTH_LONG).show();
+          lastLocation = getLocationManager().getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
+        Log.i(LOGTAG, "onCreateLoader  " + lastLocation + " ONE KILOMETER");
+        return new DealersDownloadTask(getApplicationContext(), lastLocation, Radius.ONE_KILOMETER);
+    }
+
+    private LocationManager getLocationManager() {
+      if (locationManager == null)
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+      return locationManager;
+    }
+
+    private void initLocation() {
+      getLocationManager().requestLocationUpdates(bestProvider, 2000, 20, this);
     }
 
     @Override
@@ -136,4 +153,25 @@ public class ListActivity extends Activity implements LoaderManager.LoaderCallba
                 return super.onOptionsItemSelected(anItem);
         }
     }
+
+  public void onLocationLost() {
+
+  }
+
+  public void onLocationChanged(final Location pLoc) {
+    lastLocation = pLoc;
+    getLocationManager().removeUpdates(this);
+  }
+  public void onProviderDisabled(String provider) {
+    // TODO Auto-generated method stub
+  }
+    
+  public void onProviderEnabled(String provider) {
+    // TODO Auto-generated method stub
+  }
+    
+  public void onStatusChanged(String provider, int status, Bundle extras) {
+   // TODO Auto-generated method stub
+  }
+    
 }

@@ -2,13 +2,8 @@
   xmlns:matekarte="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/action_locate_me"
-        android:icon="@drawable/ic_action_location_searching"
-        matekarte:showAsAction="ifRoom"
-        android:title="@string/action_locate_me"/>
-    <item
         android:id="@+id/action_refresh_dealers"
         android:icon="@drawable/ic_action_refresh"
-        matekarte:showAsAction="ifRoom"
+        matekarte:showAsAction="always"
         android:title="@string/action_refresh_dealers"/>
 </menu>

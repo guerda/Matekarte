@@ -114,15 +114,13 @@ public class MapActivity extends Activity implements LocationListener, LoaderCal
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.main, menu);
+
     return true;
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem anItem) {
     switch (anItem.getItemId()) {
-    case R.id.action_locate_me:
-      zoomToMyLocation();
-      return true;
     case R.id.action_refresh_dealers:
       loadDealersInBackground();
       return true;
