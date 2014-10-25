@@ -60,7 +60,7 @@ public class ListActivity extends Activity implements LoaderManager.LoaderCallba
 
         dealers = new ArrayList<Dealer>();
 
-        listAdapter = new ArrayAdapter<Dealer>(this, android.R.layout.simple_list_item_1, dealers);
+        listAdapter = new ArrayAdapter<Dealer>(this, R.layout.list_item_dealer, dealers);
         tmpListView.setAdapter(listAdapter);
 
         tmpListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
