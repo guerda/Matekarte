@@ -47,7 +47,15 @@ public class DetailsActivity extends Activity {
 
     public void onAddressClick(View aView) {
       Intent intent = new Intent(Intent.ACTION_VIEW);
-      intent.setData(Uri.parse("geo:"+dealer.getLat()+","+dealer.getLon()+"("+dealer.getName()+")?z=11"));
+
+      String label = dealer.getName();
+      String uriBegin = "geo:" + dealer.getLat() + "," + dealer.getLon();
+      String query = dealer.getLat() + "," + dealer.getLon() + "(" + label + ")";
+      String encodedQuery = Uri.encode(query);
+      String uriString = uriBegin + "?q=" + encodedQuery + "&z=10";
+      Uri uri = Uri.parse(uriString);
+
+      intent.setData(uri);
       if (intent.resolveActivity(getPackageManager()) != null) {
         startActivity(intent);
       }

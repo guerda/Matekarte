@@ -1,7 +1,6 @@
 package de.guerda.matekarte.list;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,6 @@ public class DealerListAdapter extends ArrayAdapter<Dealer> {
 
   @Override
   public View getView(int aPosition, View aConvertView, ViewGroup aParent) {
-    Log.i(LOGTAG, "getView" + aPosition + aConvertView + aParent);
     View tmpView;
     if (aConvertView == null) {
       LayoutInflater inflater = (LayoutInflater) context

@@ -46,8 +46,8 @@ public class Dealer implements Parcelable {
     this();
     id = aParcel.readString();
     name = aParcel.readString();
-    lat = aParcel.readLong();
-    lon = aParcel.readLong();
+    lat = aParcel.readDouble();
+    lon = aParcel.readDouble();
   }
 
 
