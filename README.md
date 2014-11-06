@@ -1,5 +1,6 @@
 Matekarte
 =========
+An Android client for Matekarte.de to find your source of delicious mate drinks.
 
 Original at http://www.matekarte.de
 
