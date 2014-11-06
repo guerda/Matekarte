@@ -6,8 +6,9 @@
 
     <TextView
         android:layout_width="fill_parent"
-        android:layout_height="14pt"
+        android:layout_height="wrap_content"
         android:onClick="onAddressClick"
         android:clickable="true"
-        android:id="@+id/detail_text" />
+        android:id="@+id/detail_text"
+        android:textSize="20sp"/>
 </LinearLayout>

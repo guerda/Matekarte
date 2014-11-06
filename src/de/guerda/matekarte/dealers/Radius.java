@@ -1,7 +1,7 @@
 package de.guerda.matekarte.dealers;
 
 /**
- * Created by Philip Gillißen on 11.10.2014.
+ * Created by philip on 11.10.2014.
  */
 public enum Radius {
     ONE_KILOMETER(1),

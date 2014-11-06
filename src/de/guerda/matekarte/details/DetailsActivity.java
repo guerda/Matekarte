@@ -1,9 +1,8 @@
 package de.guerda.matekarte.details;
 
-import android.net.Uri;
-
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,20 +10,22 @@ import android.view.View;
 import android.widget.TextView;
 
 import de.guerda.matekarte.R;
+import de.guerda.matekarte.dealers.Dealer;
 
 public class DetailsActivity extends Activity {
 
-    private String dealerText;
+    private Dealer dealer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        Intent tmpIntent = getIntent();
-        dealerText = tmpIntent.getStringExtra("message");
+        Bundle tmpExtras = getIntent().getExtras();
+        dealer = tmpExtras.getParcelable("message");
         TextView tmpTextView = (TextView) findViewById(R.id.detail_text);
-        tmpTextView.setText(dealerText);
+        tmpTextView.setText(dealer.getName());
+
     }
 
 
@@ -46,7 +47,7 @@ public class DetailsActivity extends Activity {
 
     public void onAddressClick(View aView) {
       Intent intent = new Intent(Intent.ACTION_VIEW);
-      intent.setData(Uri.parse(dealerText));
+      intent.setData(Uri.parse("geo:"+dealer.getLat()+","+dealer.getLon()+"("+dealer.getName()+")?z=11"));
       if (intent.resolveActivity(getPackageManager()) != null) {
         startActivity(intent);
       }

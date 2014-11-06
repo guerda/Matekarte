@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#ED145B</color>
+    <color name="primary_dark">#A01E48</color>
+    <color name="primary_dark_half_translucent">#229ABA80</color>
+    <color name="accent">#F0E02C</color>
+    <color name="ripple">@color/accent</color>
+</resources>
