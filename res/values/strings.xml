@@ -9,4 +9,6 @@
 
     <string name="action_locate_me">Locate Me</string>
     <string name="action_refresh_dealers">Refresh dealers</string>
+
+    <string name="nodata">No data returned</string>
 </resources>
