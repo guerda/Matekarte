@@ -1,37 +1,9 @@
 package de.guerda.matekarte.map;
 
-import de.guerda.matekarte.BuildConfig;
-import de.guerda.matekarte.R;
-import de.guerda.matekarte.dealers.Dealer;
-import de.guerda.matekarte.dealers.DealersList;
-import de.guerda.matekarte.dealers.DealersDownloadTask;
-import de.guerda.matekarte.dealers.Radius;
-
-
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
-import org.osmdroid.DefaultResourceProxyImpl;
-import org.osmdroid.ResourceProxy;
-import org.osmdroid.api.IMapController;
-import org.osmdroid.tileprovider.tilesource.ITileSource;
-import org.osmdroid.tileprovider.tilesource.XYTileSource;
-import org.osmdroid.tileprovider.util.CloudmadeUtil;
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.ItemizedIconOverlay;
-import org.osmdroid.views.overlay.OverlayItem;
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
-
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Loader;
-import android.content.res.AssetManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -41,6 +13,27 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import org.osmdroid.DefaultResourceProxyImpl;
+import org.osmdroid.ResourceProxy;
+import org.osmdroid.api.IMapController;
+import org.osmdroid.tileprovider.tilesource.ITileSource;
+import org.osmdroid.tileprovider.tilesource.XYTileSource;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.OverlayItem;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import de.guerda.matekarte.BuildConfig;
+import de.guerda.matekarte.R;
+import de.guerda.matekarte.dealers.Dealer;
+import de.guerda.matekarte.dealers.DealersDownloadTask;
+import de.guerda.matekarte.dealers.DealersList;
+import de.guerda.matekarte.dealers.Radius;
 
 public class MapActivity extends Activity implements LocationListener, LoaderCallbacks<DealersList> {
 
@@ -121,11 +114,11 @@ public class MapActivity extends Activity implements LocationListener, LoaderCal
   @Override
   public boolean onOptionsItemSelected(MenuItem anItem) {
     switch (anItem.getItemId()) {
-    case R.id.action_refresh_dealers:
-      loadDealersInBackground();
-      return true;
-    default:
-      return super.onOptionsItemSelected(anItem);
+      case R.id.action_refresh_dealers:
+        loadDealersInBackground();
+        return true;
+      default:
+        return super.onOptionsItemSelected(anItem);
     }
   }
 
@@ -150,7 +143,7 @@ public class MapActivity extends Activity implements LocationListener, LoaderCal
   private ITileSource getTileSource() {
     if (lyrkTileSource == null) {
       lyrkTileSource = new XYTileSource("Lyrk", ResourceProxy.string.unknown, 1, 18, 256, ".png?apikey=" + BuildConfig.LYRK_API_KEY,
-        new String[] { "http://tiles.lyrk.org/ls/" });
+              new String[]{"http://tiles.lyrk.org/ls/"});
     }
     return lyrkTileSource;
   }

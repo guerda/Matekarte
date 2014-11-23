@@ -1,6 +1,7 @@
 package de.guerda.matekarte.list;
 
 import android.content.Context;
+import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ public class DealerListAdapter extends ArrayAdapter<Dealer> {
   private static final String LOGTAG = "Matekarte.DealerListAdapter";
   private Context context;
   private List<Dealer> dealers;
+  private Location location;
 
   public DealerListAdapter(Context aContext, List<Dealer> aDealerList) {
     super(aContext, 0, aDealerList);
@@ -39,13 +41,26 @@ public class DealerListAdapter extends ArrayAdapter<Dealer> {
     }
 
     TextView tmpNameView = (TextView) tmpView.findViewById(R.id.dealer_name_text);
-    tmpNameView.setText(dealers.get(aPosition).getName());
+    Dealer tmpDealer = dealers.get(aPosition);
+    tmpNameView.setText(tmpDealer.getName());
 
-    //TextView tmpDrinksView = (TextView) tmpView.findViewById(R.id.dealer_drinks_text);
-    //tmpNameView.setText("distance");
+    TextView tmpDrinksView = (TextView) tmpView.findViewById(R.id.dealer_drinks_text);
+    tmpDrinksView.setText("drinks");
+
+
+    TextView tmpDistanceView = (TextView) tmpView.findViewById(R.id.dealer_distance_text);
+    Location tmpLocation = new Location("FAKE");
+    tmpLocation.setLatitude(tmpDealer.getLat());
+    tmpLocation.setLongitude(tmpDealer.getLon());
+    float tmpDistance = tmpLocation.distanceTo(location);
+    String tmpDistanceText = getContext().getResources().getString(R.string.text_distance, Math.round(tmpDistance));
+    tmpDistanceView.setText(tmpDistanceText);
 
     return tmpView;
   }
 
 
+  public void setLocation(Location aLocation) {
+    location = aLocation;
+  }
 }

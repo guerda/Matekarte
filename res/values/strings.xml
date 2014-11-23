@@ -11,4 +11,5 @@
     <string name="action_refresh_dealers">Refresh dealers</string>
 
     <string name="nodata">No data returned</string>
+    <string name="text_distance">%d m away</string>
 </resources>

@@ -1,5 +1,6 @@
 package de.guerda.matekarte.list;
 
+import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
@@ -10,15 +11,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +27,7 @@ import de.guerda.matekarte.dealers.DealersList;
 import de.guerda.matekarte.dealers.Radius;
 import de.guerda.matekarte.details.DetailsActivity;
 
-public class ListActivity extends android.app.ListActivity
+public class ListActivity extends Activity
         implements LoaderManager.LoaderCallbacks<DealersList>, LocationListener {
 
   private static final String LOGTAG = "Matekarte.ListActivity";
@@ -38,25 +35,23 @@ public class ListActivity extends android.app.ListActivity
   private String bestProvider;
   private LocationManager locationManager;
   private Location lastLocation;
-  private DealerListAdapter tmpDealerListAdapter;
+  private ListView listView;
 
   @Override
   protected void onCreate(Bundle aSavedInstanceState) {
     super.onCreate(aSavedInstanceState);
-
-    // Create a progress bar to display while the list loads
-    ProgressBar progressBar = new ProgressBar(this);
-    progressBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
-    progressBar.setIndeterminate(true);
-    getListView().setEmptyView(progressBar);
-
-    // Must add the progress bar to the root of the layout
-    ViewGroup tmpRootView = (ViewGroup) findViewById(android.R.id.content);
-    tmpRootView.addView(progressBar);
-
+    setContentView(R.layout.activity_list);
 
     lastLocation = null;
+
+    //Initialize list view
+    listView = (ListView) findViewById(R.id.activity_list_list);
+    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> aParent, View aView, int aPosition, long anId) {
+        handleListViewItemOnItemClick(aParent, aView, aPosition, anId);
+      }
+    });
 
     // Initialize location requests
     Criteria criteria = new Criteria();
@@ -64,9 +59,10 @@ public class ListActivity extends android.app.ListActivity
     bestProvider = getLocationManager().getBestProvider(criteria, true);
     initLocation();
 
-    tmpDealerListAdapter = new DealerListAdapter(this, new ArrayList<Dealer>());
-    setListAdapter(tmpDealerListAdapter);
+    DealerListAdapter tmpDealerListAdapter = new DealerListAdapter(this, new ArrayList<Dealer>());
+    listView.setAdapter(tmpDealerListAdapter);
 
+    // Load dealers initially
     loadDealersInBackground();
   }
 
@@ -83,6 +79,7 @@ public class ListActivity extends android.app.ListActivity
     if (tmpLoader != null) {
       tmpLoader.forceLoad();
     }
+
   }
 
   private void handleListViewItemOnItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -99,8 +96,8 @@ public class ListActivity extends android.app.ListActivity
     if (lastLocation == null) {
       lastLocation = getLocationManager().getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
     }
-    Log.i(LOGTAG, "onCreateLoader  " + lastLocation + " ONE KILOMETER");
-    return new DealersDownloadTask(getApplicationContext(), lastLocation, Radius.FIVE_KILOMETERS);
+    Log.i(LOGTAG, "onCreateLoader  " + lastLocation + " TWO KILOMETERS");
+    return new DealersDownloadTask(getApplicationContext(), lastLocation, Radius.TWO_KILOMETERS);
   }
 
   private LocationManager getLocationManager() {
@@ -119,7 +116,8 @@ public class ListActivity extends android.app.ListActivity
       Log.e(LOGTAG, "Empty result set returned");
       return;
     }
-    DealerListAdapter tmpListAdapter = (DealerListAdapter) getListAdapter();
+    DealerListAdapter tmpListAdapter = (DealerListAdapter) listView.getAdapter();
+    tmpListAdapter.setLocation(lastLocation);
     tmpListAdapter.clear();
     tmpListAdapter.addAll(data.getDealers());
     Log.i(LOGTAG, "Displaying " + data.getDealers().size() + " dealers");
@@ -161,19 +159,12 @@ public class ListActivity extends android.app.ListActivity
   }
 
   public void onProviderDisabled(String provider) {
-    // TODO Auto-generated method stub
   }
 
   public void onProviderEnabled(String provider) {
-    // TODO Auto-generated method stub
   }
 
   public void onStatusChanged(String provider, int status, Bundle extras) {
-    // TODO Auto-generated method stub
   }
 
-  @Override
-  protected void onListItemClick(ListView aParent, View aView, int aPosition, long anId) {
-    handleListViewItemOnItemClick(aParent, aView, aPosition, anId);
-  }
 }
