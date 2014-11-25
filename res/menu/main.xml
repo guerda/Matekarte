@@ -4,6 +4,6 @@
     <item
         android:id="@+id/action_refresh_dealers"
         android:icon="@drawable/ic_action_refresh"
-        matekarte:showAsAction="always"
+        android:showAsAction="always"
         android:title="@string/action_refresh_dealers"/>
 </menu>
