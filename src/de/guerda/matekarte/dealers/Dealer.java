@@ -20,6 +20,46 @@ import android.os.Parcelable;
  *   ]
  * }
  * </pre>
+ * <p/>
+ * or:
+ * <p/>
+ * <pre>
+ * {
+ * "dealer": {
+ *  "name": "Chaosdorf",
+ *  "address": "Hüttenstraße 25",
+ *  "city": "Düsseldorf",
+ *  "zip": "40215",
+ *  "country": "Deutschland",
+ *  "www": "https://chaosdorf.de",
+ *  "note": "",
+ *  "phone": "",
+ *  "type": "3",
+ *  "id": "51f22b147a58b4f6a5000595",
+ *  "longitude": 51.21660900000001,
+ *  "latitude": 6.7836145,
+ *  "drink_ids": [
+ *   "50fb3d16ce007c40fc00080e",
+ *   "50fb3d16ce007c40fc00080f",
+ *   "50fb3d16ce007c40fc000812",
+ *   "50fb3d16ce007c40fc000810",
+ *   "50fb3d16ce007c40fc000811",
+ *   "50fb3d16ce007c40fc00080d"
+ *  ],
+ *  "status_ids": [
+ *   "53de3c9c7a58b4ce6c000001"
+ *  ]
+ *  },
+ *  "statuses": [
+ *   {
+ *    "status": 1,
+ *    "id": "53de3c9c7a58b4ce6c000001",
+ *    "drink_id": "50fb3d16ce007c40fc00080f",
+ *    "dealer_id": "51f22b147a58b4f6a5000595"
+ *   }
+ *  ]
+ * }
+ * </pre>
  */
 public class Dealer implements Parcelable {
 
@@ -34,9 +74,17 @@ public class Dealer implements Parcelable {
   };
   String id;
   String name;
-  double lat;
-  double lon;
+  double latitude;
+  double longitude;
 
+  String address;
+  String city;
+  String zip;
+  String country;
+  String www;
+  String note;
+  String phone;
+  int type;
 
   public Dealer() {
     super();
@@ -46,10 +94,89 @@ public class Dealer implements Parcelable {
     this();
     id = aParcel.readString();
     name = aParcel.readString();
-    lat = aParcel.readDouble();
-    lon = aParcel.readDouble();
+    latitude = aParcel.readDouble();
+    longitude = aParcel.readDouble();
   }
 
+  public double getLatitude() {
+    return latitude;
+  }
+
+  public void setLatitude(double latitude) {
+    this.latitude = latitude;
+  }
+
+  public double getLongitude() {
+    return longitude;
+  }
+
+  public void setLongitude(double longitude) {
+    this.longitude = longitude;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public String getCity() {
+    return city;
+  }
+
+  public void setCity(String city) {
+    this.city = city;
+  }
+
+  public String getZip() {
+    return zip;
+  }
+
+  public void setZip(String zip) {
+    this.zip = zip;
+  }
+
+  public String getCountry() {
+    return country;
+  }
+
+  public void setCountry(String country) {
+    this.country = country;
+  }
+
+  public String getWww() {
+    return www;
+  }
+
+  public void setWww(String www) {
+    this.www = www;
+  }
+
+  public String getNote() {
+    return note;
+  }
+
+  public void setNote(String note) {
+    this.note = note;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public int getType() {
+    return type;
+  }
+
+  public void setType(int type) {
+    this.type = type;
+  }
 
   /**
    * Simple getter for {@link #id}
@@ -87,50 +214,23 @@ public class Dealer implements Parcelable {
     name = aName;
   }
 
-  /**
-   * Simple getter for {@link #lat}
-   *
-   * @return the lat
-   */
-  public double getLat() {
-    return lat;
-  }
 
-  /**
-   * Simple setter for {@link #lat}
-   *
-   * @param aLat the lat to set
-   */
-  public void setLat(double aLat) {
-    lat = aLat;
-  }
-
-  /**
-   * Simple getter for {@link #lon}
-   *
-   * @return the lon
-   */
-  public double getLon() {
-    return lon;
-  }
-
-  /**
-   * Simple setter for {@link #lon}
-   *
-   * @param aLon the lon to set
-   */
-  public void setLon(double aLon) {
-    lon = aLon;
-  }
-
-  /*
-   * (non-Javadoc)
-   *
-   * @see java.lang.Object#toString()
-   */
   @Override
   public String toString() {
-    return "Dealer [id=" + id + ", name=" + name + ", lat=" + lat + ", lon=" + lon + "]";
+    return "Dealer{" +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            ", latitude=" + latitude +
+            ", longitude=" + longitude +
+            ", address='" + address + '\'' +
+            ", city='" + city + '\'' +
+            ", zip='" + zip + '\'' +
+            ", country='" + country + '\'' +
+            ", www='" + www + '\'' +
+            ", note='" + note + '\'' +
+            ", phone='" + phone + '\'' +
+            ", type=" + type +
+            '}';
   }
 
   @Override
@@ -140,9 +240,10 @@ public class Dealer implements Parcelable {
 
   @Override
   public void writeToParcel(Parcel aParcel, int aFlagMask) {
+    //TODO fix this
     aParcel.writeString(id);
     aParcel.writeString(name);
-    aParcel.writeDouble(lat);
-    aParcel.writeDouble(lon);
+    aParcel.writeDouble(latitude);
+    aParcel.writeDouble(longitude);
   }
 }

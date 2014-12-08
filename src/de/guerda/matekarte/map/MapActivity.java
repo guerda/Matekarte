@@ -133,7 +133,7 @@ public class MapActivity extends Activity implements LocationListener, LoaderCal
     }
     ArrayList<OverlayItem> tmpMarkers = new ArrayList<OverlayItem>();
     for (Dealer tmpDealer : tmpDealers) {
-      tmpMarkers.add(new OverlayItem(tmpDealer.getName(), "Test", new GeoPoint(tmpDealer.getLat(), tmpDealer.getLon())));
+      tmpMarkers.add(new OverlayItem(tmpDealer.getName(), "Test", new GeoPoint(tmpDealer.getLatitude(), tmpDealer.getLongitude())));
     }
     // TODO insert tap action
     ItemizedIconOverlay<OverlayItem> tmpDealerOverlay = new ItemizedIconOverlay<OverlayItem>(tmpMarkers, null, resourceProxy);

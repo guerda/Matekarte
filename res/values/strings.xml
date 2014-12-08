@@ -10,6 +10,6 @@
     <string name="action_locate_me">Locate Me</string>
     <string name="action_refresh_dealers">Refresh dealers</string>
 
-    <string name="nodata">No data returned</string>
+    <string name="no_data">No data returned</string>
     <string name="text_distance">%d m away</string>
 </resources>

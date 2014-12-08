@@ -76,10 +76,6 @@ public class ListActivity extends Activity
   private void loadDealersInBackground() {
     initLocation();
     DealersDownloadTask tmpLoader = (DealersDownloadTask) getLoaderManager().initLoader(0, null, this);
-    if (tmpLoader != null) {
-      tmpLoader.forceLoad();
-    }
-
   }
 
   private void handleListViewItemOnItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -113,16 +109,19 @@ public class ListActivity extends Activity
   @Override
   public void onLoadFinished(Loader<DealersList> loader, DealersList data) {
     if (data == null) {
-      Log.e(LOGTAG, "Empty result set returned");
+      findViewById(R.id.activity_list_list).setVisibility(View.INVISIBLE);
+      findViewById(android.R.id.empty).setVisibility(View.VISIBLE);
       return;
     }
+    findViewById(R.id.activity_list_list).setVisibility(View.VISIBLE);
+    findViewById(android.R.id.empty).setVisibility(View.INVISIBLE);
+
     DealerListAdapter tmpListAdapter = (DealerListAdapter) listView.getAdapter();
     tmpListAdapter.setLocation(lastLocation);
     tmpListAdapter.clear();
     tmpListAdapter.addAll(data.getDealers());
     Log.i(LOGTAG, "Displaying " + data.getDealers().size() + " dealers");
 
-    setContentView(R.layout.activity_list);
     tmpListAdapter.notifyDataSetChanged();
   }
 
@@ -150,7 +149,6 @@ public class ListActivity extends Activity
   }
 
   public void onLocationLost() {
-
   }
 
   public void onLocationChanged(final Location pLoc) {
@@ -165,6 +163,15 @@ public class ListActivity extends Activity
   }
 
   public void onStatusChanged(String provider, int status, Bundle extras) {
+  }
+
+  public void onStop() {
+    super.onStop();
+    getLocationManager().removeUpdates(this);
+  }
+
+  public void onRestart() {
+    super.onRestart();
   }
 
 }

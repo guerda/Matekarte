@@ -1,46 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
     package="de.guerda.matekarte"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:versionCode="0"
+    android:versionName="0.1">
 
     <uses-sdk
         android:minSdkVersion="11"
-        android:targetSdkVersion="21" />
+        android:targetSdkVersion="21"/>
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
-    <uses-feature android:name="android.hardware.location" />
-    <uses-feature android:name="android.hardware.location.gps" />
+    <uses-feature android:name="android.hardware.location"/>
+    <uses-feature android:name="android.hardware.location.gps"/>
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".list.ListActivity"
             android:hardwareAccelerated="false"
-            android:label="@string/title_activity_list" >
+            android:label="@string/title_activity_list">
 
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".map.MapActivity"
             android:hardwareAccelerated="false"
-            android:label="@string/title_activity_map" >
+            android:label="@string/title_activity_map">
         </activity>
         <activity
             android:name=".details.DetailsActivity"
-            android:label="@string/title_activity_details" >
+            android:label="@string/title_activity_details">
         </activity>
 
     </application>

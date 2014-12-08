@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_margin="7sp"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/detail_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:onClick="onAddressClick"
+        android:layout_marginBottom="4sp"
         android:clickable="true"
-        android:id="@+id/detail_text"
-        android:textSize="20sp"/>
+        android:textSize="22sp"
+        tools:text="Dealer 1"/>
+
+    <TextView
+        android:id="@+id/detail_address"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3sp"
+        android:onClick="onAddressClick"
+        tools:text="Fakestrasse 23\n12345 Musterstadt\nGermany"/>
+
+    <TextView
+        android:id="@+id/detail_phone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onPhoneClick"
+        android:textColor="@color/accent"
+        tools:text="+49 123 15434"/>
+
+
+    <ListView
+        android:id="@+id/detail_drinks"
+        android:layout_width="fill_parent"
+        android:layout_height="26sp">
+    </ListView>
+
 </LinearLayout>

@@ -11,10 +11,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -22,9 +21,8 @@ import java.util.Map.Entry;
 public class DealersListDeserializer implements JsonDeserializer<DealersList> {
 
   public static void main(String[] args) throws IOException {
-    URL tmpUrl = new URL("http://www.matekarte.de/dealers/map");
-    HttpURLConnection tmpConnection = (HttpURLConnection) tmpUrl.openConnection();
-    InputStreamReader tmpReader = new InputStreamReader(tmpConnection.getInputStream());
+    InputStream tmpStream = DealersListDeserializer.class.getClassLoader().getResourceAsStream("testfile.json");
+    InputStreamReader tmpReader = new InputStreamReader(tmpStream);
 
     GsonBuilder builder = new GsonBuilder();
     builder.registerTypeAdapter(DealersList.class, new DealersListDeserializer());
@@ -49,8 +47,8 @@ public class DealersListDeserializer implements JsonDeserializer<DealersList> {
       Dealer tempDealer = new Dealer();
       tempDealer.setId(tmpId);
       tempDealer.setName(tmpName);
-      tempDealer.setLat(tmpLat);
-      tempDealer.setLon(tmpLon);
+      tempDealer.setLatitude(tmpLat);
+      tempDealer.setLongitude(tmpLon);
       tempDealers.add(tempDealer);
     }
     return new DealersList(tempDealers);

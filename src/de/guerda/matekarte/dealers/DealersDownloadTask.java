@@ -1,6 +1,5 @@
 package de.guerda.matekarte.dealers;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
@@ -21,11 +20,11 @@ import java.util.Locale;
 
 import de.janmatuschek.GeoLocation;
 
-public class DealersDownloadTask extends AsyncTaskLoader<DealersList> {
+public class DealersDownloadTask extends MatekarteTask<DealersList> {
 
-  private static final String DEALERS_URL = "https://www.matekarte.de/dealers/map";
   private static final String LOGTAG = "Matekarte." + DealersDownloadTask.class.getSimpleName();
   private static final double EARTH_RADIUS = 6371.01;
+  private static final String URL_DEALERS = "dealers/map";
   private final Radius radius;
   private DealersList dealersList;
   private Location location;
@@ -48,7 +47,7 @@ public class DealersDownloadTask extends AsyncTaskLoader<DealersList> {
   public DealersList loadInBackground() {
     HttpURLConnection tempConnection = null;
     try {
-      URL tmpUrl = new URL(DEALERS_URL + getBoundingBoxParameters());
+      URL tmpUrl = new URL(URL_BASE + URL_DEALERS + getBoundingBoxParameters());
       Log.i(LOGTAG, "Downloading Dealers '" + tmpUrl.toString() + "' ...");
       tempConnection = (HttpURLConnection) tmpUrl.openConnection();
       BufferedInputStream tmpInputStream = new BufferedInputStream(tempConnection.getInputStream());

@@ -49,11 +49,16 @@ public class DealerListAdapter extends ArrayAdapter<Dealer> {
 
 
     TextView tmpDistanceView = (TextView) tmpView.findViewById(R.id.dealer_distance_text);
-    Location tmpLocation = new Location("FAKE");
-    tmpLocation.setLatitude(tmpDealer.getLat());
-    tmpLocation.setLongitude(tmpDealer.getLon());
-    float tmpDistance = tmpLocation.distanceTo(location);
-    String tmpDistanceText = getContext().getResources().getString(R.string.text_distance, Math.round(tmpDistance));
+    String tmpDistanceText = null;
+    if (location == null) {
+      tmpDistanceText = "No distance calculable";
+    } else {
+      Location tmpLocation = new Location("FAKE");
+      tmpLocation.setLatitude(tmpDealer.getLatitude());
+      tmpLocation.setLongitude(tmpDealer.getLongitude());
+      float tmpDistance = tmpLocation.distanceTo(location);
+      tmpDistanceText = getContext().getResources().getString(R.string.text_distance, Math.round(tmpDistance));
+    }
     tmpDistanceView.setText(tmpDistanceText);
 
     return tmpView;
