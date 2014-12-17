@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
@@ -32,19 +33,71 @@ public class DealerDetailsDeserializer implements JsonDeserializer<Dealer> {
     System.out.println("Dealer element: " + tmpDealerElement);
 
     Dealer tmpDealer = new Dealer();
-    tmpDealer.setId(tmpDealerElement.get("id").getAsString());
-    tmpDealer.setName(tmpDealerElement.get("name").getAsString());
-    tmpDealer.setAddress(tmpDealerElement.get("address").getAsString());
-    tmpDealer.setCity(tmpDealerElement.get("city").getAsString());
-    tmpDealer.setZip(tmpDealerElement.get("zip").getAsString());
-    tmpDealer.setCountry(tmpDealerElement.get("country").getAsString());
-    tmpDealer.setWww(tmpDealerElement.get("www").getAsString());
-    tmpDealer.setNote(tmpDealerElement.get("note").getAsString());
-    tmpDealer.setPhone(tmpDealerElement.get("phone").getAsString());
-    tmpDealer.setType(tmpDealerElement.get("type").getAsInt());
-    tmpDealer.setLongitude(tmpDealerElement.get("longitude").getAsDouble());
-    tmpDealer.setLatitude(tmpDealerElement.get("latitude").getAsDouble());
+
+    JsonElement tmpId = tmpDealerElement.get("id");
+    if (tmpId != null && !(tmpId instanceof JsonNull)) {
+      tmpDealer.setId(tmpId.getAsString());
+    }
+
+    JsonElement tmpName = tmpDealerElement.get("name");
+    if (tmpName != null && !(tmpName instanceof JsonNull)) {
+      tmpDealer.setName(tmpName.getAsString());
+    }
+
+    JsonElement tmpAddress = tmpDealerElement.get("address");
+    if (tmpAddress != null && !(tmpAddress instanceof JsonNull)) {
+      tmpDealer.setAddress(tmpAddress.getAsString());
+    }
+
+    JsonElement tmpCity = tmpDealerElement.get("city");
+    if (tmpCity != null && !(tmpCity instanceof JsonNull)) {
+      tmpDealer.setCity(tmpCity.getAsString());
+    }
+
+    JsonElement tmpZip = tmpDealerElement.get("zip");
+    if (tmpZip != null && !(tmpZip instanceof JsonNull)) {
+      tmpDealer.setZip(tmpZip.getAsString());
+    }
+
+    JsonElement tmpCountry = tmpDealerElement.get("country");
+    if (tmpCountry != null && !(tmpCountry instanceof JsonNull)) {
+      tmpDealer.setCountry(tmpCountry.getAsString());
+    }
+
+    JsonElement tmpWww = tmpDealerElement.get("www");
+    if (tmpWww != null && !(tmpWww instanceof JsonNull)) {
+      tmpDealer.setWww(tmpWww.getAsString());
+    }
+
+    JsonElement tmpNote = tmpDealerElement.get("note");
+    if (tmpNote != null && !(tmpNote instanceof JsonNull)) {
+      tmpDealer.setNote(tmpNote.getAsString());
+
+    }
+
+
+    JsonElement tmpPhone = tmpDealerElement.get("phone");
+    if (tmpPhone != null && !(tmpPhone instanceof JsonNull)) {
+      tmpDealer.setPhone(tmpPhone.getAsString());
+    }
+
+    JsonElement tmpType = tmpDealerElement.get("type");
+    if (tmpType != null && !(tmpType instanceof JsonNull)) {
+      tmpDealer.setType(tmpType.getAsInt());
+    }
+
+    JsonElement tmpLongitude = tmpDealerElement.get("longitude");
+    if (tmpLongitude != null && !(tmpLongitude instanceof JsonNull)) {
+      tmpDealer.setLongitude(tmpLongitude.getAsDouble());
+    }
+
+    JsonElement tmpLatitude = tmpDealerElement.get("latitude");
+    if (tmpLatitude != null && !(tmpLatitude instanceof JsonNull)) {
+      tmpDealer.setLatitude(tmpLatitude.getAsDouble());
+    }
+
     //TODO drink_ids
+
     //TODO status_ids
     return tmpDealer;
 
