@@ -16,6 +16,8 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 
 import de.janmatuschek.GeoLocation;
@@ -75,6 +77,7 @@ public class DealersDownloadTask extends MatekarteTask<DealersList> {
       }
     }
     Log.i(LOGTAG, "Downloading finished");
+    sortDealersListByDistance(dealersList, location);
     return dealersList;
 
   }
@@ -97,6 +100,26 @@ public class DealersDownloadTask extends MatekarteTask<DealersList> {
     //2: MAXLAT --> top
     //3: MAXLON --> right
     return String.format(Locale.US, "?b=%f&l=%f&t=%f&r=%f", aBoundingBox[0], aBoundingBox[1], aBoundingBox[2], aBoundingBox[3]);
+  }
+
+  private void sortDealersListByDistance(DealersList aList, final Location aLocation) {
+    Comparator<Dealer> tmpDistanceComparator = new Comparator<Dealer>() {
+      @Override
+      public int compare(Dealer aDealer1, Dealer aDealer2) {
+        float tmpDistance1 = calculateDistance(aLocation, aDealer1);
+        float tmpDistance2 = calculateDistance(aLocation, aDealer2);
+        return (int) (tmpDistance1 - tmpDistance2);
+      }
+    };
+    Collections.sort(aList.getDealers(), tmpDistanceComparator);
+  }
+
+  private float calculateDistance(Location aLocation, Dealer aDealer) {
+    Location tmpLocation = new Location("FAKE");
+    tmpLocation.setLatitude(aDealer.getLatitude());
+    tmpLocation.setLongitude(aDealer.getLongitude());
+    float tmpDistance = tmpLocation.distanceTo(location);
+    return tmpDistance;
   }
 
 }

@@ -30,7 +30,6 @@ public class DealerDetailsDeserializer implements JsonDeserializer<Dealer> {
   public Dealer deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
     JsonObject tmpJsonObject = jsonElement.getAsJsonObject();
     JsonObject tmpDealerElement = tmpJsonObject.get("dealer").getAsJsonObject();
-    System.out.println("Dealer element: " + tmpDealerElement);
 
     Dealer tmpDealer = new Dealer();
 
@@ -75,7 +74,6 @@ public class DealerDetailsDeserializer implements JsonDeserializer<Dealer> {
 
     }
 
-
     JsonElement tmpPhone = tmpDealerElement.get("phone");
     if (tmpPhone != null && !(tmpPhone instanceof JsonNull)) {
       tmpDealer.setPhone(tmpPhone.getAsString());
@@ -88,12 +86,16 @@ public class DealerDetailsDeserializer implements JsonDeserializer<Dealer> {
 
     JsonElement tmpLongitude = tmpDealerElement.get("longitude");
     if (tmpLongitude != null && !(tmpLongitude instanceof JsonNull)) {
-      tmpDealer.setLongitude(tmpLongitude.getAsDouble());
+      // This confusion of Latitude and Longitude is intentional, as the details api mixed up both. I correct it here.
+      //TODO Fix this mix up, when Pascal fixed the bug in the API
+      tmpDealer.setLatitude(tmpLongitude.getAsDouble());
     }
 
     JsonElement tmpLatitude = tmpDealerElement.get("latitude");
     if (tmpLatitude != null && !(tmpLatitude instanceof JsonNull)) {
-      tmpDealer.setLatitude(tmpLatitude.getAsDouble());
+      // This confusion of Latitude and Longitude is intentional, as the details api mixed up both. I correct it here.
+      //TODO Fix this mix up, when Pascal fixed the bug in the API
+      tmpDealer.setLongitude(tmpLatitude.getAsDouble());
     }
 
     //TODO drink_ids
