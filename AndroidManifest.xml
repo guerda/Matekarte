@@ -28,7 +28,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".list.ListActivity"
-            android:hardwareAccelerated="false"
             android:label="@string/title_activity_list">
 
             <intent-filter>
@@ -38,19 +37,12 @@
         </activity>
         <activity
             android:name=".map.MapActivity"
-            android:hardwareAccelerated="false"
             android:label="@string/title_activity_map">
         </activity>
         <activity
             android:name=".details.DetailsActivity"
             android:label="@string/title_activity_details">
         </activity>
-        <activity
-            android:name="org.acra.CrashReportDialog"
-            android:excludeFromRecents="true"
-            android:finishOnTaskLaunch="true"
-            android:launchMode="singleInstance"
-            android:theme="@android:style/Theme.Dialog"/>
 
     </application>
 
