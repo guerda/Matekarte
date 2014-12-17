@@ -2,11 +2,11 @@ Matekarte
 =========
 Description
 -----------
-Android client for [https://www.matekarte.de/ Matekarte], which lets you find
+Android client for [Matekarte](https://www.matekarte.de/), which lets you find
 you locations of nearby dealers for Yerba Mate drinks like Club-Mate, Flora
 Power, 1337MATE, and many more.
 
-Special thanks to [https://www.pascalj.de Pascal] for creating Matekarte.de and
+Special thanks to [Pascal](https://www.pascalj.de) for creating Matekarte.de and
 the excellent API on this.
 
 Warning: This app is not ready yet. Currently, I'm working on it and try to
@@ -15,7 +15,7 @@ be) bugs. I'm open for any bug reports created by you!
 
 Crash Reports
 -------------
-Crash reports will be automatically reported using [http://www.acra.ch ACRA], run by [http://www.iriscouch.com IrisCouch].
+Crash reports will be automatically reported using [ACRA](http://www.acra.ch), run by [IrisCouch](http://www.iriscouch.com).
 
 Permissions
 -----------
@@ -38,6 +38,6 @@ This app is already available at F-Droid:
 
 [![Matekarte on F-Droid](https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=https://f-droid.org/repository/browse/?fdid=de.guerda.matekarte&choe=UTF-8)](https://f-droid.org/repository/browse/?fdid=de.guerda.matekarte)
 
-Build status on [https://travis-ci.org/ Travis] :
+Build status on [Travis CI](https://travis-ci.org/):
 [![Build Status](https://travis-ci.org/guerda/Matekarte.svg?branch=master)](https://travis-ci.org/guerda/Matekarte)
 
