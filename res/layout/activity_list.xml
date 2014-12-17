@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v4.widget.SwipeRefreshLayout
     android:id="@+id/activity_list_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_margin="7sp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <ListView
         android:id="@+id/activity_list_list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-    <TextView
-        android:id="@android:id/empty"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:text="@string/no_data"
-        android:visibility="invisible"/>
-
-</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

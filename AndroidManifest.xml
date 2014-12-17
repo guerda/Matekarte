@@ -5,9 +5,7 @@
     android:versionCode="2"
     android:versionName="0.1">
 
-    <uses-sdk
-        android:minSdkVersion="11"
-        android:targetSdkVersion="21"/>
+    <!-- Min/target SDK versions (<uses-sdk>) managed by build.gradle -->
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>

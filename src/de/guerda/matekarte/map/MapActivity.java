@@ -37,7 +37,7 @@ import de.guerda.matekarte.dealers.Radius;
 
 public class MapActivity extends Activity implements LocationListener, LoaderCallbacks<DealersList> {
 
-  private static final String LOGTAG = "Matekarte." + MapActivity.class.getSimpleName();
+  private static final String LOGTAG = MapActivity.class.getSimpleName();
 
   private LocationManager mLocationManager;
   private MapView mMap;

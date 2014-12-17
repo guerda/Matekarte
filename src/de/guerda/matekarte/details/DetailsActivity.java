@@ -83,7 +83,11 @@ public class DetailsActivity extends Activity implements LoaderManager.LoaderCal
     }
 
     dealer = aDealer;
-    ((TextView) findViewById(R.id.detail_address)).setText(dealer.getAddress() + "\n" + dealer.getZip() + " " + dealer.getCity() + "\n" + dealer.getCountry());
+    String tmpAddressText = String.format("%s\n%s %s\n%s", dealer.getAddress(), dealer.getZip(), dealer.getCity(), dealer.getCountry());
+    ((TextView) findViewById(R.id.detail_address)).setText(tmpAddressText);
+    if (dealer.getPhone() == null) {
+      findViewById(R.id.button_phone).setVisibility(View.INVISIBLE);
+    }
     ((TextView) findViewById(R.id.detail_phone)).setText(dealer.getPhone());
 //    ((ListView)findViewById(R.id.detail_drinks)).
   }

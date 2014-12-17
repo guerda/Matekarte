@@ -24,7 +24,7 @@ import de.janmatuschek.GeoLocation;
 
 public class DealersDownloadTask extends MatekarteTask<DealersList> {
 
-  private static final String LOGTAG = "Matekarte." + DealersDownloadTask.class.getSimpleName();
+  private static final String LOGTAG = DealersDownloadTask.class.getSimpleName();
   private static final double EARTH_RADIUS = 6371.01;
   private static final String URL_DEALERS = "dealers/map";
   private final Radius radius;

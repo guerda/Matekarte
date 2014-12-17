@@ -3,8 +3,9 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:layout_margin="7dip"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:padding="10sp"
+    >
 
     <TextView
         android:id="@+id/dealer_name_text"
@@ -27,6 +28,7 @@
         android:id="@+id/dealer_distance_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4sp"
         android:textSize="16sp"
         tools:text="14 km away"/>
 

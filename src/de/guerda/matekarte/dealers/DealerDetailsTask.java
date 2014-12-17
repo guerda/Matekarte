@@ -18,7 +18,7 @@ import java.net.URL;
 
 public class DealerDetailsTask extends MatekarteTask<Dealer> {
 
-  private static final String LOGTAG = "Matekarte." + DealerDetailsTask.class.getSimpleName();
+  private static final String LOGTAG = DealerDetailsTask.class.getSimpleName();
   private static final String URL_DEALER_DETAIL = "api/v2/dealers/";
   private Dealer dealer;
   private String dealerId;

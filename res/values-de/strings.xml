@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Matekarte</string>
+
+    <string name="title_activity_details">Mate-Händler</string>
+    <string name="title_activity_list">Liste der Mate-Händler</string>
+    <string name="title_activity_map">Karte der Mate-Händler</string>
+
+    <string name="action_locate_me">Finde mich</string>
+    <string name="action_refresh_dealers">Aktualisiere Händler</string>
+
+    <string name="no_data">Keine Daten erhalten</string>
+    <string name="text_distance">%d m weg</string>
+
+    <string name="acra_toast_text">Entschuldigung, ein Fehler ist aufgetreten. Wir haben einen Fehlerbericht verschickt, um den Fehler zu beheben.</string>
+    <string name="action_route">ROUTE</string>
+    <string name="action_phone">ANRUF</string>
+
+</resources>

@@ -18,7 +18,7 @@ import de.guerda.matekarte.dealers.Dealer;
  */
 public class DealerListAdapter extends ArrayAdapter<Dealer> {
 
-  private static final String LOGTAG = "Matekarte.DealerListAdapter";
+  private static final String LOGTAG = "DealerListAdapter";
   private Context context;
   private List<Dealer> dealers;
   private Location location;
