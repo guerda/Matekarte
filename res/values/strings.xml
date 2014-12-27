@@ -13,7 +13,7 @@
     <string name="no_data">No data returned</string>
     <string name="text_distance">%d m away</string>
 
-    <string name="acra_toast_text">We\'re sorry, but an unexpected error occured. We\'ve sent out an error report to fix this.</string>
+    <string name="acra_toast_text">We\'re sorry, but an unexpected error occurred. We\'ve sent out an error report to fix this.</string>
     <string name="action_route">ROUTE</string>
     <string name="action_phone">PHONE</string>
 
