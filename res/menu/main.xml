@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/action_refresh_dealers"
-        android:icon="@drawable/ic_action_refresh"
-        app:showAsAction="always"
+        android:icon="@drawable/ic_popup_sync_1"
+        matekarte:showAsAction="always"
         android:title="@string/action_refresh_dealers"/>
 </menu>
