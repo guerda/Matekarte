@@ -5,4 +5,8 @@
     <color name="primary_dark_half_translucent">#7F314B80</color>
     <color name="accent">#00C8FF</color>
     <color name="ripple">#1290B2</color>
+    <color name="drink_status_1">#00C961</color>
+    <color name="drink_status_2">#E3C100</color>
+    <color name="drink_status_3">#ED145B</color>
+    <color name="drink_status_none">#80000000</color>
 </resources>

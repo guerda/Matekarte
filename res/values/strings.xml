@@ -17,4 +17,12 @@
     <string name="action_route">ROUTE</string>
     <string name="action_phone">PHONE</string>
 
+    <string name="drink_status_1">in stock</string>
+    <string name="drink_status_2">short</string>
+    <string name="drink_status_3">sold out</string>
+    <string name="brands">Brands</string>
+    <string name="new_dealer">New Dealer</string>
+    <string name="edit_dealer">Edit Dealer</string>
+    <string name="remove_dealer">Remove Dealer</string>
+
 </resources>

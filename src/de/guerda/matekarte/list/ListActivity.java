@@ -27,7 +27,8 @@ import de.guerda.matekarte.details.DetailsActivity;
 public class ListActivity extends Activity
         implements LoaderManager.LoaderCallbacks<DealersList>, LocationListener {
 
-  private static final String LOGTAG = "ListActivity";
+  private static final String LOGTAG = ListActivity.class.getSimpleName();
+
   private LocationManager locationManager;
   private Location lastLocation;
   private ListView listView;

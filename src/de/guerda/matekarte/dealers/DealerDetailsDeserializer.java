@@ -3,6 +3,7 @@ package de.guerda.matekarte.dealers;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -11,6 +12,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by philip on 08.12.2014.
@@ -101,6 +104,28 @@ public class DealerDetailsDeserializer implements JsonDeserializer<Dealer> {
     //TODO drink_ids
 
     //TODO status_ids
+
+
+    JsonArray tmpStatusesElement = tmpJsonObject.get("statuses").getAsJsonArray();
+    List<DrinkStatus> tmpStatuses = new ArrayList<DrinkStatus>();
+    for (JsonElement tmpEntry : tmpStatusesElement) {
+      //TODO add nullpointer checks
+      JsonObject tmpValue = tmpEntry.getAsJsonObject();
+      DrinkStatus tmpStatus = new DrinkStatus();
+      int status = tmpValue.get("status").getAsInt();
+      tmpStatus.setStatus(status);
+      String id = tmpValue.get("id").getAsString();
+      tmpStatus.setId(id);
+      String drink_id = tmpValue.get("drink_id").getAsString();
+      tmpStatus.setDrinkId(drink_id);
+      String dealer_id = tmpValue.get("dealer_id").getAsString();
+      tmpStatus.setDealerId(dealer_id);
+      tmpStatuses.add(tmpStatus);
+    }
+
+    tmpDealer.setStatuses(tmpStatuses);
+//    tmpStatusesElement.get
+
     return tmpDealer;
 
   }

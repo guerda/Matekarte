@@ -4,6 +4,8 @@ package de.guerda.matekarte.dealers;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Example:
  * <p/>
@@ -72,19 +74,20 @@ public class Dealer implements Parcelable {
       return new Dealer[size];
     }
   };
-  String id;
-  String name;
-  double latitude;
-  double longitude;
+  private String id;
+  private String name;
+  private double latitude;
+  private double longitude;
 
-  String address;
-  String city;
-  String zip;
-  String country;
-  String www;
-  String note;
-  String phone;
-  int type;
+  private String address;
+  private String city;
+  private String zip;
+  private String country;
+  private String www;
+  private String note;
+  private String phone;
+  private int type;
+  private List<DrinkStatus> statuses;
 
   public Dealer() {
     super();
@@ -92,10 +95,19 @@ public class Dealer implements Parcelable {
 
   public Dealer(Parcel aParcel) {
     this();
+    //TODO add all members
     id = aParcel.readString();
     name = aParcel.readString();
     latitude = aParcel.readDouble();
     longitude = aParcel.readDouble();
+  }
+
+  public List<DrinkStatus> getStatuses() {
+    return statuses;
+  }
+
+  public void setStatuses(List<DrinkStatus> statuses) {
+    this.statuses = statuses;
   }
 
   public double getLatitude() {
@@ -240,7 +252,7 @@ public class Dealer implements Parcelable {
 
   @Override
   public void writeToParcel(Parcel aParcel, int aFlagMask) {
-    //TODO fix this
+    //TODO Add all elements to parcelable
     aParcel.writeString(id);
     aParcel.writeString(name);
     aParcel.writeDouble(latitude);

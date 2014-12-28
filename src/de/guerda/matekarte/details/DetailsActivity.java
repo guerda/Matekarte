@@ -6,18 +6,26 @@ import android.content.Intent;
 import android.content.Loader;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import de.guerda.matekarte.R;
 import de.guerda.matekarte.dealers.Dealer;
 import de.guerda.matekarte.dealers.DealerDetailsTask;
+import de.guerda.matekarte.dealers.DrinkStatus;
 
 public class DetailsActivity extends Activity implements LoaderManager.LoaderCallbacks<Dealer> {
 
+  private static final String LOGTAG = DetailsActivity.class.getSimpleName();
+
   private Dealer dealer;
+  private DrinkListAdapter drinkListAdapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +37,12 @@ public class DetailsActivity extends Activity implements LoaderManager.LoaderCal
     TextView tmpTextView = (TextView) findViewById(R.id.detail_text);
     tmpTextView.setText(dealer.getName());
 
-    DealerDetailsTask tmpLoader = (DealerDetailsTask) getLoaderManager().initLoader(0, null, this);
+    // Get drink list adapter to later update all available drinks
+    drinkListAdapter = new DrinkListAdapter(this, new ArrayList<String>());
+    ((ListView) findViewById(R.id.detail_drinks)).setAdapter(drinkListAdapter);
+
+    // Initialize loader to load dealers details.
+    getLoaderManager().initLoader(0, null, this);
   }
 
 
@@ -85,11 +98,20 @@ public class DetailsActivity extends Activity implements LoaderManager.LoaderCal
     dealer = aDealer;
     String tmpAddressText = String.format("%s\n%s %s\n%s", dealer.getAddress(), dealer.getZip(), dealer.getCity(), dealer.getCountry());
     ((TextView) findViewById(R.id.detail_address)).setText(tmpAddressText);
-    if (dealer.getPhone() == null) {
+    if (dealer.getPhone() == null || dealer.getPhone().trim().length() == 0) {
       findViewById(R.id.button_phone).setVisibility(View.INVISIBLE);
     }
     ((TextView) findViewById(R.id.detail_phone)).setText(dealer.getPhone());
-//    ((ListView)findViewById(R.id.detail_drinks)).
+
+
+    drinkListAdapter.clear();
+    for (DrinkStatus tmpDrink : aDealer.getStatuses()) {
+      drinkListAdapter.add(tmpDrink.getDrinkId());
+    }
+    Log.i(LOGTAG, "Displaying " + aDealer.getStatuses().size() + " dealers");
+
+    drinkListAdapter.notifyDataSetChanged();
+
   }
 
   @Override

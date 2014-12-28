@@ -17,4 +17,13 @@
     <string name="action_route">ROUTE</string>
     <string name="action_phone">ANRUF</string>
 
+    <string name="drink_status_1">Auf Lager</string>
+    <string name="drink_status_2">Knapp</string>
+    <string name="drink_status_3">Ausverkauft</string>
+    <string name="brands">Sorten</string>
+    <string name="new_dealer">Neuer Händler</string>
+    <string name="remove_dealer">Händler entfernen</string>
+    <string name="edit_dealer">Händler bearbeiten</string>
+
+
 </resources>
