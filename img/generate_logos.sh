@@ -2,11 +2,15 @@
 # Ratios: 2   :3   :4    :6     :8 
 #         mdpi:hdpi:xhdpi:xxhdpi:xxxhdpi 
 
-inkscape --export-png=../res/drawable-mdpi/ic_launcher.png --export-width=48 --export-height=48 matekarte-logo.svg 
-inkscape --export-png=../res/drawable-hdpi/ic_launcher.png --export-width=72 --export-height=72 matekarte-logo.svg 
-inkscape --export-png=../res/drawable-xhdpi/ic_launcher.png --export-width=96 --export-height=96 matekarte-logo.svg 
-inkscape --export-png=../res/drawable-xxhdpi/ic_launcher.png --export-width=144 --export-height=144 matekarte-logo.svg 
-inkscape --export-png=../res/drawable-xxxhdpi/ic_launcher.png --export-width=192 --export-height=192 matekarte-logo.svg 
+LOGOS=(matekarte-logo.svg)
+
+for LOGO in ${LOGOS[@]}; do
+  inkscape --export-png=../res/drawable-mdpi/ic_launcher.png --export-width=48 --export-height=48 matekarte-logo.svg 
+  inkscape --export-png=../res/drawable-hdpi/ic_launcher.png --export-width=72 --export-height=72 matekarte-logo.svg 
+  inkscape --export-png=../res/drawable-xhdpi/ic_launcher.png --export-width=96 --export-height=96 matekarte-logo.svg 
+  inkscape --export-png=../res/drawable-xxhdpi/ic_launcher.png --export-width=144 --export-height=144 matekarte-logo.svg 
+  inkscape --export-png=../res/drawable-xxxhdpi/ic_launcher.png --export-width=192 --export-height=192 matekarte-logo.svg 
+done
 
 ANDROID_RES=$ANDROID_HOME/platforms/android-21/data/res/
 

@@ -4,7 +4,7 @@ package de.guerda.matekarte.dealers;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * Example:
@@ -87,7 +87,7 @@ public class Dealer implements Parcelable {
   private String note;
   private String phone;
   private int type;
-  private List<DrinkStatus> statuses;
+  private Map<String, DrinkStatus> statuses;
 
   public Dealer() {
     super();
@@ -102,11 +102,11 @@ public class Dealer implements Parcelable {
     longitude = aParcel.readDouble();
   }
 
-  public List<DrinkStatus> getStatuses() {
+  public Map<String, DrinkStatus> getStatuses() {
     return statuses;
   }
 
-  public void setStatuses(List<DrinkStatus> statuses) {
+  public void setStatuses(Map<String, DrinkStatus> statuses) {
     this.statuses = statuses;
   }
 

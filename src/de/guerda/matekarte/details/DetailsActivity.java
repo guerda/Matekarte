@@ -10,15 +10,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import de.guerda.matekarte.R;
 import de.guerda.matekarte.dealers.Dealer;
 import de.guerda.matekarte.dealers.DealerDetailsTask;
 import de.guerda.matekarte.dealers.DrinkStatus;
+import it.sephiroth.android.library.widget.HListView;
 
 public class DetailsActivity extends Activity implements LoaderManager.LoaderCallbacks<Dealer> {
 
@@ -38,8 +39,8 @@ public class DetailsActivity extends Activity implements LoaderManager.LoaderCal
     tmpTextView.setText(dealer.getName());
 
     // Get drink list adapter to later update all available drinks
-    drinkListAdapter = new DrinkListAdapter(this, new ArrayList<String>());
-    ((ListView) findViewById(R.id.detail_drinks)).setAdapter(drinkListAdapter);
+    drinkListAdapter = new DrinkListAdapter(this, new ArrayList<DrinkStatus>());
+    ((HListView) findViewById(R.id.detail_drinks)).setAdapter(drinkListAdapter);
 
     // Initialize loader to load dealers details.
     getLoaderManager().initLoader(0, null, this);
@@ -105,8 +106,9 @@ public class DetailsActivity extends Activity implements LoaderManager.LoaderCal
 
 
     drinkListAdapter.clear();
-    for (DrinkStatus tmpDrink : aDealer.getStatuses()) {
-      drinkListAdapter.add(tmpDrink.getDrinkId());
+    Map<String, DrinkStatus> tmpStatusesMap = aDealer.getStatuses();
+    for (String tmpDrinkId : tmpStatusesMap.keySet()) {
+      drinkListAdapter.add(tmpStatusesMap.get(tmpDrinkId));
     }
     Log.i(LOGTAG, "Displaying " + aDealer.getStatuses().size() + " dealers");
 

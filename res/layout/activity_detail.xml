@@ -34,8 +34,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/detail_address"
         android:layout_gravity="end"
-        android:layout_toRightOf="@+id/detail_address"
         android:layout_toEndOf="@+id/detail_address"
+        android:layout_toRightOf="@+id/detail_address"
         android:clickable="true"
         android:onClick="onAddressClick"
         android:text="@string/action_route"/>
@@ -50,12 +50,12 @@
         android:textColor="@color/accent"
         tools:text="+49 123 15434"/>
 
-    <ListView
+    <it.sephiroth.android.library.widget.HListView
         android:id="@+id/detail_drinks"
         android:layout_width="fill_parent"
-        android:layout_height="26sp"
+        android:layout_height="60dip"
         android:layout_below="@id/detail_phone">
-    </ListView>
+    </it.sephiroth.android.library.widget.HListView>
 
     <Button
         android:id="@+id/button_phone"

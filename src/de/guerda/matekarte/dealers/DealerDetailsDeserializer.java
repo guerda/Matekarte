@@ -1,5 +1,7 @@
 package de.guerda.matekarte.dealers;
 
+import android.util.Log;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -12,13 +14,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * Created by philip on 08.12.2014.
  */
 public class DealerDetailsDeserializer implements JsonDeserializer<Dealer> {
+
+  private static final String LOGTAG = DealerDetailsDeserializer.class.getSimpleName();
 
   public static void main(String[] args) {
     GsonBuilder builder = new GsonBuilder();
@@ -101,30 +104,53 @@ public class DealerDetailsDeserializer implements JsonDeserializer<Dealer> {
       tmpDealer.setLongitude(tmpLatitude.getAsDouble());
     }
 
-    //TODO drink_ids
+    HashMap<String, DrinkStatus> tmpStatusMap = new HashMap<>();
 
-    //TODO status_ids
+    JsonArray tmpDrinksElement = tmpDealerElement.get("drink_ids").getAsJsonArray();
+    for (JsonElement tmpEntry : tmpDrinksElement) {
+      tmpStatusMap.put(tmpEntry.getAsString(), null);
+    }
 
 
     JsonArray tmpStatusesElement = tmpJsonObject.get("statuses").getAsJsonArray();
-    List<DrinkStatus> tmpStatuses = new ArrayList<DrinkStatus>();
+
     for (JsonElement tmpEntry : tmpStatusesElement) {
-      //TODO add nullpointer checks
       JsonObject tmpValue = tmpEntry.getAsJsonObject();
-      DrinkStatus tmpStatus = new DrinkStatus();
-      int status = tmpValue.get("status").getAsInt();
-      tmpStatus.setStatus(status);
-      String id = tmpValue.get("id").getAsString();
-      tmpStatus.setId(id);
-      String drink_id = tmpValue.get("drink_id").getAsString();
-      tmpStatus.setDrinkId(drink_id);
-      String dealer_id = tmpValue.get("dealer_id").getAsString();
-      tmpStatus.setDealerId(dealer_id);
-      tmpStatuses.add(tmpStatus);
+      DrinkStatus tmpDrinkStatus = new DrinkStatus();
+
+      JsonElement tmpStatus = tmpValue.get("status");
+      if (tmpStatus != null) {
+        int tmpStatusId = tmpStatus.getAsInt();
+        tmpDrinkStatus.setStatus(tmpStatusId);
+      }
+
+      JsonElement tmpDrinkStatusId = tmpValue.get("id");
+      if (tmpDrinkStatusId != null) {
+        String tmpIdString = tmpDrinkStatusId.getAsString();
+        tmpDrinkStatus.setId(tmpIdString);
+      }
+
+      JsonElement tmpDrinkId = tmpValue.get("drink_id");
+      String tmpDrinkIdString = null;
+      if (tmpDrinkId != null) {
+        tmpDrinkIdString = tmpDrinkId.getAsString();
+        tmpDrinkStatus.setDrinkId(tmpDrinkIdString);
+      }
+
+      JsonElement tmpDealerId = tmpValue.get("dealer_id");
+      if (tmpDealerId != null) {
+        String tmpDealerIdString = tmpDealerId.getAsString();
+        tmpDrinkStatus.setDealerId(tmpDealerIdString);
+      }
+
+      if (tmpDrinkIdString != null) {
+        tmpStatusMap.put(tmpDrinkIdString, tmpDrinkStatus);
+      } else {
+        Log.e(LOGTAG, "Could not read drink for dealer " + tmpDealerId + ".");
+      }
     }
 
-    tmpDealer.setStatuses(tmpStatuses);
-//    tmpStatusesElement.get
+    tmpDealer.setStatuses(tmpStatusMap);
 
     return tmpDealer;
 

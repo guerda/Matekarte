@@ -12,18 +12,19 @@ import android.widget.ImageView;
 import java.util.List;
 
 import de.guerda.matekarte.R;
+import de.guerda.matekarte.dealers.DrinkStatus;
 
 /**
  * Created by philip on 28.12.2014.
  */
-public class DrinkListAdapter extends ArrayAdapter<String> {
+public class DrinkListAdapter extends ArrayAdapter<DrinkStatus> {
 
   private static final String LOGTAG = DrinkListAdapter.class.getSimpleName();
 
-  private final List<String> drinkList;
+  private final List<DrinkStatus> drinkList;
   private final Context context;
 
-  public DrinkListAdapter(Context aContext, List<String> aDrinkList) {
+  public DrinkListAdapter(Context aContext, List<DrinkStatus> aDrinkList) {
     super(aContext, 0, aDrinkList);
     context = aContext;
     drinkList = aDrinkList;
@@ -40,14 +41,36 @@ public class DrinkListAdapter extends ArrayAdapter<String> {
       tmpView = aConvertView;
     }
 
-    String tmpDrink = drinkList.get(aPosition);
+    DrinkStatus tmpDrink = drinkList.get(aPosition);
 
-    ImageView tmpDrinkLogo = (ImageView) tmpView.findViewById(R.id.drink_logo);
-    String tmpResourceUri = "@drawable/drink_" + tmpDrink;
-    Log.i(LOGTAG, "Loading drink logo '" + tmpResourceUri + "'...");
-    int tmpImageResource = context.getResources().getIdentifier(tmpResourceUri, null, context.getPackageName());
-    Drawable tmpDrawable = context.getResources().getDrawable(tmpImageResource);
-    tmpDrinkLogo.setImageDrawable(tmpDrawable);
+    if (tmpDrink != null) {
+      // Updating the drink logo
+      ImageView tmpDrinkLogo = (ImageView) tmpView.findViewById(R.id.drink_logo);
+      String tmpResourceUri = "@drawable/drink_" + tmpDrink.getDrinkId();
+      Log.i(LOGTAG, "Loading drink logo '" + tmpResourceUri + "'...");
+      int tmpImageResource = getResourceId(tmpResourceUri);
+      Drawable tmpDrawable = context.getResources().getDrawable(tmpImageResource);
+
+      tmpDrinkLogo.setImageDrawable(tmpDrawable);
+
+      //TODO Update alternative icon text
+
+      // Updating drink status
+      View tmpDrinkStatusColor = tmpView.findViewById(R.id.drink_status_color);
+
+      tmpResourceUri = "@color/drink_status_" + tmpDrink.getStatus();
+      Log.i(LOGTAG, "Loading status color '" + tmpResourceUri + "'...");
+      int tmpColorResource = getResourceId(tmpResourceUri);
+      int tmpStatusColor = context.getResources().getColor(tmpColorResource);
+      tmpDrinkStatusColor.setBackgroundColor(tmpStatusColor);
+    } else {
+      Log.e(LOGTAG, "Could not find drink");
+    }
+
     return tmpView;
+  }
+
+  private int getResourceId(String tmpResourceUri) {
+    return context.getResources().getIdentifier(tmpResourceUri, null, context.getPackageName());
   }
 }
