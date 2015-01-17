@@ -34,6 +34,8 @@ References
 
 Original at http://www.matekarte.de
 
+All logos are copyright by the associated companies. I don't own these logos, I use them only for recognition within the app.
+
 This app is already available at F-Droid:
 
 [![Matekarte on F-Droid](https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=https://f-droid.org/repository/browse/?fdid=de.guerda.matekarte&choe=UTF-8)](https://f-droid.org/repository/browse/?fdid=de.guerda.matekarte)
