@@ -37,7 +37,7 @@ import de.guerda.matekarte.dealers.Radius;
 
 public class MapActivity extends Activity implements LocationListener, LoaderCallbacks<DealersList> {
 
-  private static final String LOGTAG = MapActivity.class.getSimpleName();
+  private static final String LOGTAG = MapActivity.class.getName();
 
   private LocationManager mLocationManager;
   private MapView mMap;
@@ -230,7 +230,7 @@ public class MapActivity extends Activity implements LocationListener, LoaderCal
     tmpLocation.setLatitude(0f);
     tmpLocation.setLongitude(0f);
 
-    return new DealersDownloadTask(getApplicationContext(), tmpLocation, Radius.ONE_KILOMETER);
+    return new DealersDownloadTask(getApplicationContext(), tmpLocation, Radius.ONE_KILOMETER, null);
 
   }
 

@@ -23,7 +23,7 @@ import it.sephiroth.android.library.widget.HListView;
 
 public class DetailsActivity extends Activity implements LoaderManager.LoaderCallbacks<Dealer> {
 
-  private static final String LOGTAG = DetailsActivity.class.getSimpleName();
+  private static final String LOGTAG = DetailsActivity.class.getName();
 
   private Dealer dealer;
   private DrinkListAdapter drinkListAdapter;
@@ -87,7 +87,7 @@ public class DetailsActivity extends Activity implements LoaderManager.LoaderCal
 
   @Override
   public Loader<Dealer> onCreateLoader(int id, Bundle args) {
-    return new DealerDetailsTask(getApplicationContext(), dealer.getId());
+    return new DealerDetailsTask(getApplicationContext(), dealer.getId(), this);
   }
 
   @Override

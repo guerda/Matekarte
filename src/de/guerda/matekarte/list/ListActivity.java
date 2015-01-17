@@ -27,7 +27,7 @@ import de.guerda.matekarte.details.DetailsActivity;
 public class ListActivity extends Activity
         implements LoaderManager.LoaderCallbacks<DealersList>, LocationListener {
 
-  private static final String LOGTAG = ListActivity.class.getSimpleName();
+  private static final String LOGTAG = ListActivity.class.getName();
 
   private LocationManager locationManager;
   private Location lastLocation;
@@ -97,7 +97,7 @@ public class ListActivity extends Activity
       lastLocation = getLocationManager().getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
     }
     Log.i(LOGTAG, "onCreateLoader  " + lastLocation + " TWO KILOMETERS");
-    return new DealersDownloadTask(getApplicationContext(), lastLocation, Radius.TWO_KILOMETERS);
+    return new DealersDownloadTask(getApplicationContext(), lastLocation, Radius.TWO_KILOMETERS, this);
   }
 
   private LocationManager getLocationManager() {

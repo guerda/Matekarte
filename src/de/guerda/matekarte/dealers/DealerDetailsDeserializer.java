@@ -21,7 +21,7 @@ import java.util.HashMap;
  */
 public class DealerDetailsDeserializer implements JsonDeserializer<Dealer> {
 
-  private static final String LOGTAG = DealerDetailsDeserializer.class.getSimpleName();
+  private static final String LOGTAG = DealerDetailsDeserializer.class.getName();
 
   public static void main(String[] args) {
     GsonBuilder builder = new GsonBuilder();

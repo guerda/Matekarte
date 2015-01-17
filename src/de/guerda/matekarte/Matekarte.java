@@ -3,9 +3,11 @@ package de.guerda.matekarte;
 import android.app.Application;
 
 import org.acra.ACRA;
+import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
+import org.acra.sender.HttpSender;
 
-/*@ReportsCrashes(
+@ReportsCrashes(
         formKey = "",
         formUri = "http://guerda.iriscouch.com/acra-matekarte/_design/acra-storage/_update/report",
         httpMethod = HttpSender.Method.PUT,
@@ -15,8 +17,7 @@ import org.acra.annotation.ReportsCrashes;
         // Your usual ACRA configuration
         resToastText = R.string.acra_toast_text,
         mode = ReportingInteractionMode.TOAST
-        )*/
-@ReportsCrashes(formKey = "", mailTo = "guerda@freenet.de")
+)
 public class Matekarte extends Application {
   @Override
   public void onCreate() {

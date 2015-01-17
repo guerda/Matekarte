@@ -19,7 +19,7 @@ import de.guerda.matekarte.dealers.DrinkStatus;
  */
 public class DrinkListAdapter extends ArrayAdapter<DrinkStatus> {
 
-  private static final String LOGTAG = DrinkListAdapter.class.getSimpleName();
+  private static final String LOGTAG = DrinkListAdapter.class.getName();
 
   private final List<DrinkStatus> drinkList;
   private final Context context;

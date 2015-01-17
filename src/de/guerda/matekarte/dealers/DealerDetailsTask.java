@@ -1,5 +1,6 @@
 package de.guerda.matekarte.dealers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -18,13 +19,13 @@ import java.net.URL;
 
 public class DealerDetailsTask extends MatekarteTask<Dealer> {
 
-  private static final String LOGTAG = DealerDetailsTask.class.getSimpleName();
+  private static final String LOGTAG = DealerDetailsTask.class.getName();
   private static final String URL_DEALER_DETAIL = "api/v2/dealers/";
   private Dealer dealer;
   private String dealerId;
 
-  public DealerDetailsTask(Context aContext, String aDealerId) {
-    super(aContext);
+  public DealerDetailsTask(Context aContext, String aDealerId, Activity aParentActivity) {
+    super(aContext, aParentActivity);
     dealerId = aDealerId;
     Log.i(LOGTAG, "Creating DealersDownloadTask (" + aDealerId + ")");
   }
