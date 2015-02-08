@@ -7,11 +7,11 @@ import com.octo.android.robospice.request.googlehttpclient.GoogleHttpClientSpice
  */
 public abstract class MatekarteRequest<RESULT> extends GoogleHttpClientSpiceRequest<RESULT> {
 
-    protected static final String URL_BASE = "https://www.matekarte.de/";
+  protected static final String URL_BASE = "https://www.matekarte.de/";
 
-    public MatekarteRequest(Class<RESULT> clazz) {
-        super(clazz);
-    }
+  public MatekarteRequest(Class<RESULT> clazz) {
+    super(clazz);
+  }
 
 
 }

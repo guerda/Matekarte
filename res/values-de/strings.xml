@@ -24,6 +24,7 @@
     <string name="new_dealer">Neuer Händler</string>
     <string name="remove_dealer">Händler entfernen</string>
     <string name="edit_dealer">Händler bearbeiten</string>
+    <string name="drink_logo">Getränke-Logo</string>
 
 
 </resources>

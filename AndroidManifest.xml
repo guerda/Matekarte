@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.guerda.matekarte"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:versionCode="2"
     android:versionName="0.1">
 
     <!-- Min/target SDK versions (<uses-sdk>) managed by build.gradle -->
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
-    <uses-feature android:name="android.hardware.location"/>
-    <uses-feature android:name="android.hardware.location.gps"/>
+    <uses-feature android:name="android.hardware.location" />
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <application
         android:name=".Matekarte"
@@ -24,27 +23,25 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-      <service
-          android:name="com.octo.android.robospice.GsonGoogleHttpClientSpiceService"
-          android:exported="false"/>
+        <service
+            android:name="com.octo.android.robospice.GsonGoogleHttpClientSpiceService"
+            android:exported="false" />
 
-      <activity
+        <activity
             android:name=".list.ListActivity"
             android:label="@string/title_activity_list">
 
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".map.MapActivity"
-            android:label="@string/title_activity_map">
-        </activity>
+            android:label="@string/title_activity_map"></activity>
         <activity
             android:name=".details.DetailsActivity"
-            android:label="@string/title_activity_details">
-        </activity>
+            android:label="@string/title_activity_details"></activity>
 
     </application>
 

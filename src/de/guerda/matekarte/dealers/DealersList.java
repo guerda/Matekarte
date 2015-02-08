@@ -6,11 +6,11 @@ public class DealersList {
 
   private List<Dealer> dealers;
 
-    public DealersList() {
-        this(null);
-    }
+  public DealersList() {
+    this(null);
+  }
 
-    public DealersList(List<Dealer> dealers) {
+  public DealersList(List<Dealer> dealers) {
     super();
     this.dealers = dealers;
   }

@@ -149,6 +149,10 @@ public class DealerDetailsDeserializer implements JsonDeserializer<Dealer> {
         Log.e(LOGTAG, "Could not read drink for dealer " + tmpDealerId + ".");
       }
     }
+    for (String tmpKey : tmpStatusMap.keySet()) {
+      Log.d(LOGTAG, "Status Map Entry: " + tmpKey
+      );
+    }
 
     tmpDealer.setStatuses(tmpStatusMap);
 

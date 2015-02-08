@@ -19,33 +19,33 @@ import de.guerda.matekarte.dealers.DealerDetailsDeserializer;
  */
 public class DealerDetailsRequest extends MatekarteRequest<Dealer> {
 
-    private static final String LOGTAG = DealerDetailsRequest.class.getSimpleName();
-    private static final String URL_DEALER_DETAIL = "api/v2/dealers/";
-    private Dealer dealer;
-    private String dealerId;
+  private static final String LOGTAG = DealerDetailsRequest.class.getSimpleName();
+  private static final String URL_DEALER_DETAIL = "api/v2/dealers/";
+  private Dealer dealer;
+  private String dealerId;
 
-    public DealerDetailsRequest(String dealerId) {
-        super(Dealer.class);
-        this.dealerId = dealerId;
+  public DealerDetailsRequest(String dealerId) {
+    super(Dealer.class);
+    this.dealerId = dealerId;
+  }
+
+  @Override
+  public Dealer loadDataFromNetwork() throws Exception {
+    HttpRequest request = getHttpRequestFactory().buildGetRequest(new GenericUrl(URL_BASE + URL_DEALER_DETAIL + dealerId.trim()));
+    GsonBuilder tmpBuilder = new GsonBuilder();
+    tmpBuilder.registerTypeAdapter(Dealer.class, new DealerDetailsDeserializer());
+    Gson tempGson = tmpBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+    Dealer tmpDealer;
+    try (InputStream in = request.execute().getContent()) {
+      tmpDealer = tempGson.fromJson(new InputStreamReader(in), Dealer.class);
+      if (tmpDealer == null) {
+        Log.e(LOGTAG, "No dealer details downloaded");
+      } else {
+        Log.i(LOGTAG, "Downloaded dealer details: " + tmpDealer);
+        dealer = tmpDealer;
+      }
     }
 
-    @Override
-    public Dealer loadDataFromNetwork() throws Exception {
-        HttpRequest request = getHttpRequestFactory().buildGetRequest(new GenericUrl(URL_BASE + URL_DEALER_DETAIL + dealerId.trim()));
-        GsonBuilder tmpBuilder = new GsonBuilder();
-        tmpBuilder.registerTypeAdapter(Dealer.class, new DealerDetailsDeserializer());
-        Gson tempGson = tmpBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-        Dealer tmpDealer;
-        try (InputStream in = request.execute().getContent()) {
-            tmpDealer = tempGson.fromJson(new InputStreamReader(in), Dealer.class);
-            if (tmpDealer == null) {
-                Log.e(LOGTAG, "No dealer details downloaded");
-            } else {
-                Log.i(LOGTAG, "Downloaded dealer details: " + tmpDealer);
-                dealer = tmpDealer;
-            }
-        }
-
-        return tmpDealer;
-    }
+    return tmpDealer;
+  }
 }

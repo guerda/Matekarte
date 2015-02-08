@@ -38,209 +38,209 @@ import de.guerda.matekarte.dealers.Radius;
 
 public class MapActivity extends SpicedActivity implements LocationListener, RequestListener<DealersList> {
 
-    private static final String LOGTAG = MapActivity.class.getSimpleName();
+  private static final String LOGTAG = MapActivity.class.getSimpleName();
 
-    private LocationManager mLocationManager;
-    private MapView mMap;
-    private MyLocationNewOverlay mMyLocationOverlay;
-    // private ItemizedOverlay dealersOverlay;
-    private int backButtonCount;
-    private ResourceProxy resourceProxy;
+  private LocationManager mLocationManager;
+  private MapView mMap;
+  private MyLocationNewOverlay mMyLocationOverlay;
+  // private ItemizedOverlay dealersOverlay;
+  private int backButtonCount;
+  private ResourceProxy resourceProxy;
 
-    private DealersDownloadRequest dealersDownloadRequest;
+  private DealersDownloadRequest dealersDownloadRequest;
 
-    private String bestProvider;
+  private String bestProvider;
 
-    private XYTileSource lyrkTileSource;
+  private XYTileSource lyrkTileSource;
 
-    private LocationManager getLocationManager() {
-        if (this.mLocationManager == null)
-            this.mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        return this.mLocationManager;
+  private LocationManager getLocationManager() {
+    if (this.mLocationManager == null)
+      this.mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+    return this.mLocationManager;
+  }
+
+  private void initLocation() {
+    getLocationManager().requestLocationUpdates(bestProvider, 2000, 20, this);
+  }
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    // Initialize location requests
+    Criteria criteria = new Criteria();
+    criteria.setAccuracy(Criteria.ACCURACY_FINE);
+    bestProvider = getLocationManager().getBestProvider(criteria, true);
+
+    // Create map
+    setContentView(R.layout.activity_map);
+    backButtonCount = 0;
+
+    mMap = (MapView) this.findViewById(R.id.map);
+    mMap.setTileSource(getTileSource());
+    mMap.setBuiltInZoomControls(true);
+    mMap.setMultiTouchControls(true);
+
+    mMap.getController().setZoom(3);
+    initLocation();
+
+    // Add your own location
+    mMyLocationOverlay = new MyLocationNewOverlay(getApplicationContext(), mMap);
+    mMyLocationOverlay.enableMyLocation();
+    mMyLocationOverlay.setDrawAccuracyEnabled(true);
+
+    mMap.getOverlays().add(mMyLocationOverlay);
+
+    resourceProxy = new DefaultResourceProxyImpl(getApplicationContext());
+
+  }
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+    // Download dealers
+    loadDealersInBackground();
+  }
+
+  private void loadDealersInBackground() {
+    Location pLoc = mMyLocationOverlay.getLastFix();
+    if (pLoc == null) {
+      pLoc = new Location("fake");
+      pLoc.setLatitude(0.0);
+      pLoc.setLongitude(0.0);
     }
+    dealersDownloadRequest = new DealersDownloadRequest(pLoc, Radius.ONE_KILOMETER);
+    getSpiceManager().execute(dealersDownloadRequest, this);
+  }
 
-    private void initLocation() {
-        getLocationManager().requestLocationUpdates(bestProvider, 2000, 20, this);
-    }
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    // Inflate the menu; this adds items to the action bar if it is present.
+    getMenuInflater().inflate(R.menu.main, menu);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    return true;
+  }
 
-        // Initialize location requests
-        Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        bestProvider = getLocationManager().getBestProvider(criteria, true);
-
-        // Create map
-        setContentView(R.layout.activity_map);
-        backButtonCount = 0;
-
-        mMap = (MapView) this.findViewById(R.id.map);
-        mMap.setTileSource(getTileSource());
-        mMap.setBuiltInZoomControls(true);
-        mMap.setMultiTouchControls(true);
-
-        mMap.getController().setZoom(3);
-        initLocation();
-
-        // Add your own location
-        mMyLocationOverlay = new MyLocationNewOverlay(getApplicationContext(), mMap);
-        mMyLocationOverlay.enableMyLocation();
-        mMyLocationOverlay.setDrawAccuracyEnabled(true);
-
-        mMap.getOverlays().add(mMyLocationOverlay);
-
-        resourceProxy = new DefaultResourceProxyImpl(getApplicationContext());
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // Download dealers
+  @Override
+  public boolean onOptionsItemSelected(MenuItem anItem) {
+    switch (anItem.getItemId()) {
+      case R.id.action_refresh_dealers:
         loadDealersInBackground();
-    }
-
-    private void loadDealersInBackground() {
-        Location pLoc = mMyLocationOverlay.getLastFix();
-        if (pLoc == null) {
-            pLoc = new Location("fake");
-            pLoc.setLatitude(0.0);
-            pLoc.setLongitude(0.0);
-        }
-        dealersDownloadRequest = new DealersDownloadRequest(pLoc, Radius.ONE_KILOMETER);
-        getSpiceManager().execute(dealersDownloadRequest, this);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-
         return true;
+      default:
+        return super.onOptionsItemSelected(anItem);
     }
+  }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem anItem) {
-        switch (anItem.getItemId()) {
-            case R.id.action_refresh_dealers:
-                loadDealersInBackground();
-                return true;
-            default:
-                return super.onOptionsItemSelected(anItem);
-        }
+  private void showDealersOnMap(DealersList aDealersList) {
+    Log.i(LOGTAG, "Showing dealers on map");
+    if (aDealersList == null) {
+      return;
     }
-
-    private void showDealersOnMap(DealersList aDealersList) {
-        Log.i(LOGTAG, "Showing dealers on map");
-        if (aDealersList == null) {
-            return;
-        }
-        List<Dealer> tmpDealers = aDealersList.getDealers();
-        if (tmpDealers == null) {
-            return;
-        }
-        ArrayList<OverlayItem> tmpMarkers = new ArrayList<OverlayItem>();
-        for (Dealer tmpDealer : tmpDealers) {
-            tmpMarkers.add(new OverlayItem(tmpDealer.getName(), "Test", new GeoPoint(tmpDealer.getLatitude(), tmpDealer.getLongitude())));
-        }
-        // TODO insert tap action
-        ItemizedIconOverlay<OverlayItem> tmpDealerOverlay = new ItemizedIconOverlay<OverlayItem>(tmpMarkers, null, resourceProxy);
-        mMap.getOverlays().add(tmpDealerOverlay);
+    List<Dealer> tmpDealers = aDealersList.getDealers();
+    if (tmpDealers == null) {
+      return;
     }
-
-    private ITileSource getTileSource() {
-        if (lyrkTileSource == null) {
-            lyrkTileSource = new XYTileSource("Lyrk", ResourceProxy.string.unknown, 1, 18, 256, ".png?apikey=" + BuildConfig.LYRK_API_KEY,
-                    new String[]{"http://tiles.lyrk.org/ls/"});
-        }
-        return lyrkTileSource;
+    ArrayList<OverlayItem> tmpMarkers = new ArrayList<OverlayItem>();
+    for (Dealer tmpDealer : tmpDealers) {
+      tmpMarkers.add(new OverlayItem(tmpDealer.getName(), "Test", new GeoPoint(tmpDealer.getLatitude(), tmpDealer.getLongitude())));
     }
+    // TODO insert tap action
+    ItemizedIconOverlay<OverlayItem> tmpDealerOverlay = new ItemizedIconOverlay<OverlayItem>(tmpMarkers, null, resourceProxy);
+    mMap.getOverlays().add(tmpDealerOverlay);
+  }
 
-    @Override
-    protected void onResume() {
-        // register location listener
-        initLocation();
-
-        super.onResume();
+  private ITileSource getTileSource() {
+    if (lyrkTileSource == null) {
+      lyrkTileSource = new XYTileSource("Lyrk", ResourceProxy.string.unknown, 1, 18, 256, ".png?apikey=" + BuildConfig.LYRK_API_KEY,
+              new String[]{"http://tiles.lyrk.org/ls/"});
     }
+    return lyrkTileSource;
+  }
 
-    public void onLocationLost() {
+  @Override
+  protected void onResume() {
+    // register location listener
+    initLocation();
 
+    super.onResume();
+  }
+
+  public void onLocationLost() {
+
+  }
+
+  public void onLocationChanged(final Location pLoc) {
+  }
+
+  public void zoomToMyLocation() {
+    Location pLoc = mMyLocationOverlay.getLastFix();
+    if (pLoc != null) {
+      double tmpLatitude = pLoc.getLatitude();
+      double tmpLongitude = pLoc.getLongitude();
+      float tmpAccuracy = pLoc.getAccuracy();
+      IMapController tmpController = mMap.getController();
+      tmpController.animateTo(new GeoPoint(tmpLatitude, tmpLongitude));
+      tmpController.setZoom(getZoomLevelToAccuracy(tmpAccuracy));
+      Log.i(LOGTAG, "lat=" + tmpLatitude + ";lon=" + tmpLongitude + ";acc=" + tmpAccuracy);
     }
+  }
 
-    public void onLocationChanged(final Location pLoc) {
+  private int getZoomLevelToAccuracy(float anAccuracy) {
+    Log.i(LOGTAG, "Zoom level to accuracy: " + anAccuracy);
+    if (anAccuracy < 100) {
+      return 16;
+    } else if (anAccuracy < 1000) {
+      return 5;
     }
+    return 0;
+  }
 
-    public void zoomToMyLocation() {
-        Location pLoc = mMyLocationOverlay.getLastFix();
-        if (pLoc != null) {
-            double tmpLatitude = pLoc.getLatitude();
-            double tmpLongitude = pLoc.getLongitude();
-            float tmpAccuracy = pLoc.getAccuracy();
-            IMapController tmpController = mMap.getController();
-            tmpController.animateTo(new GeoPoint(tmpLatitude, tmpLongitude));
-            tmpController.setZoom(getZoomLevelToAccuracy(tmpAccuracy));
-            Log.i(LOGTAG, "lat=" + tmpLatitude + ";lon=" + tmpLongitude + ";acc=" + tmpAccuracy);
-        }
+  @Override
+  protected void onPause() {
+    getLocationManager().removeUpdates(this);
+    super.onPause();
+  }
+
+  /**
+   * Back button listener. Will close the application if the back button pressed
+   * twice.
+   */
+  public void onBackPressed() {
+    if (backButtonCount >= 1) {
+      // Intent intent = new Intent(Intent.ACTION_MAIN);
+      // intent.addCategory(Intent.CATEGORY_HOME);
+      // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      // startActivity(intent);
+      finish();
+    } else {
+      Toast.makeText(this, "Press the back button once again to close the application.", Toast.LENGTH_LONG).show();
+      backButtonCount++;
     }
+  }
 
-    private int getZoomLevelToAccuracy(float anAccuracy) {
-        Log.i(LOGTAG, "Zoom level to accuracy: " + anAccuracy);
-        if (anAccuracy < 100) {
-            return 16;
-        } else if (anAccuracy < 1000) {
-            return 5;
-        }
-        return 0;
-    }
+  public void onProviderDisabled(String provider) {
+    // TODO Auto-generated method stub
 
-    @Override
-    protected void onPause() {
-        getLocationManager().removeUpdates(this);
-        super.onPause();
-    }
+  }
 
-    /**
-     * Back button listener. Will close the application if the back button pressed
-     * twice.
-     */
-    public void onBackPressed() {
-        if (backButtonCount >= 1) {
-            // Intent intent = new Intent(Intent.ACTION_MAIN);
-            // intent.addCategory(Intent.CATEGORY_HOME);
-            // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            // startActivity(intent);
-            finish();
-        } else {
-            Toast.makeText(this, "Press the back button once again to close the application.", Toast.LENGTH_LONG).show();
-            backButtonCount++;
-        }
-    }
+  public void onProviderEnabled(String provider) {
+    // TODO Auto-generated method stub
 
-    public void onProviderDisabled(String provider) {
-        // TODO Auto-generated method stub
+  }
 
-    }
+  public void onStatusChanged(String provider, int status, Bundle extras) {
+    // TODO Auto-generated method stub
 
-    public void onProviderEnabled(String provider) {
-        // TODO Auto-generated method stub
+  }
 
-    }
+  @Override
+  public void onRequestFailure(SpiceException spiceException) {
+    //TODO handle error
+  }
 
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void onRequestFailure(SpiceException spiceException) {
-        //TODO handle error
-    }
-
-    @Override
-    public void onRequestSuccess(DealersList dealersList) {
-        showDealersOnMap(dealersList);
-    }
+  @Override
+  public void onRequestSuccess(DealersList dealersList) {
+    showDealersOnMap(dealersList);
+  }
 }

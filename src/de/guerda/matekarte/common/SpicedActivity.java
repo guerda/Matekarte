@@ -10,25 +10,25 @@ import com.octo.android.robospice.SpiceManager;
  */
 public class SpicedActivity extends Activity {
 
-    private SpiceManager spiceManager = new SpiceManager(GsonGoogleHttpClientSpiceService.class);
+  private SpiceManager spiceManager = new SpiceManager(GsonGoogleHttpClientSpiceService.class);
 
-    public SpicedActivity() {
-    }
+  public SpicedActivity() {
+  }
 
-    protected SpiceManager getSpiceManager() {
-        return spiceManager;
-    }
+  protected SpiceManager getSpiceManager() {
+    return spiceManager;
+  }
 
-    @Override
-    protected void onStart() {
-        spiceManager.start(this);
-        super.onStart();
-    }
+  @Override
+  protected void onStart() {
+    spiceManager.start(this);
+    super.onStart();
+  }
 
-    @Override
-    protected void onStop() {
-        spiceManager.shouldStop();
-        super.onStop();
-    }
+  @Override
+  protected void onStop() {
+    spiceManager.shouldStop();
+    super.onStop();
+  }
 
 }

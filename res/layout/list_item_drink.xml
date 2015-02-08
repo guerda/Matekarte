@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/drink_logo"
         android:layout_width="@android:dimen/app_icon_size"
         android:layout_height="@android:dimen/app_icon_size"
-        android:contentDescription="Drink Logo"/>
+        android:contentDescription="@string/drink_logo" />
 
     <View
         android:id="@+id/drink_status_color"
         android:layout_width="@android:dimen/app_icon_size"
         android:layout_height="wrap_content"
-        android:background="@color/drink_status_none"/>
+        android:background="@color/drink_status_none" />
 </LinearLayout>

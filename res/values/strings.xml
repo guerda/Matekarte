@@ -24,5 +24,6 @@
     <string name="new_dealer">New Dealer</string>
     <string name="edit_dealer">Edit Dealer</string>
     <string name="remove_dealer">Remove Dealer</string>
+    <string name="drink_logo">Drink Logo</string>
 
 </resources>

@@ -34,12 +34,12 @@ public class ListActivity extends SpicedActivity
   private Location lastLocation;
   private ListView listView;
   private SwipeRefreshLayout swipeRefreshLayout;
-    private DealersDownloadRequest dealersDownloadRequest;
+  private DealersDownloadRequest dealersDownloadRequest;
 
   @Override
   protected void onCreate(Bundle aSavedInstanceState) {
     super.onCreate(aSavedInstanceState);
-      locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+    locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     setContentView(R.layout.activity_list);
 
     lastLocation = null;
@@ -67,14 +67,14 @@ public class ListActivity extends SpicedActivity
 
   }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        getLocationManager().requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-        getLocationManager().requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-    }
+  @Override
+  protected void onStart() {
+    super.onStart();
+    getLocationManager().requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+    getLocationManager().requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+  }
 
-    @Override
+  @Override
   protected void onPause() {
     getLocationManager().removeUpdates(this);
     super.onPause();
@@ -85,7 +85,7 @@ public class ListActivity extends SpicedActivity
     Log.i(LOGTAG, "Start Refreshing");
     swipeRefreshLayout.setRefreshing(true);
     Log.i(LOGTAG, "request location updates");
-      getSpiceManager().execute(dealersDownloadRequest, this);
+    getSpiceManager().execute(dealersDownloadRequest, this);
   }
 
   private void handleListViewItemOnItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -102,13 +102,13 @@ public class ListActivity extends SpicedActivity
     return locationManager;
   }
 
-    @Override
-    public void onRequestFailure(SpiceException spiceException) {
-        //TODO
+  @Override
+  public void onRequestFailure(SpiceException spiceException) {
+    //TODO
     }
 
-    @Override
-    public void onRequestSuccess(DealersList data) {
+  @Override
+  public void onRequestSuccess(DealersList data) {
     Log.i(LOGTAG, "loader finished");
     swipeRefreshLayout.setRefreshing(false);
     if (data == null) {
@@ -132,8 +132,8 @@ public class ListActivity extends SpicedActivity
     getLocationManager().removeUpdates(this);
 
     Log.i(LOGTAG, "init loader");
-      dealersDownloadRequest = new DealersDownloadRequest(lastLocation, Radius.TWO_KILOMETERS);
-      loadDealersInBackground();
+    dealersDownloadRequest = new DealersDownloadRequest(lastLocation, Radius.TWO_KILOMETERS);
+    loadDealersInBackground();
 
   }
 
