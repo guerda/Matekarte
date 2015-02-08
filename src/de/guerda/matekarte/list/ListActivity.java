@@ -1,10 +1,7 @@
 package de.guerda.matekarte.list;
 
-import android.app.Activity;
-import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.Loader;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -15,29 +12,34 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
+
 import java.util.ArrayList;
 
 import de.guerda.matekarte.R;
+import de.guerda.matekarte.common.SpicedActivity;
+import de.guerda.matekarte.common.request.DealersDownloadRequest;
 import de.guerda.matekarte.dealers.Dealer;
-import de.guerda.matekarte.dealers.DealersDownloadTask;
 import de.guerda.matekarte.dealers.DealersList;
 import de.guerda.matekarte.dealers.Radius;
 import de.guerda.matekarte.details.DetailsActivity;
 
-public class ListActivity extends Activity
-        implements LoaderManager.LoaderCallbacks<DealersList>, LocationListener {
+public class ListActivity extends SpicedActivity
+        implements LocationListener, RequestListener<DealersList> {
 
-  private static final String LOGTAG = ListActivity.class.getName();
+  private static final String LOGTAG = ListActivity.class.getSimpleName();
 
   private LocationManager locationManager;
   private Location lastLocation;
   private ListView listView;
   private SwipeRefreshLayout swipeRefreshLayout;
+    private DealersDownloadRequest dealersDownloadRequest;
 
   @Override
   protected void onCreate(Bundle aSavedInstanceState) {
     super.onCreate(aSavedInstanceState);
-
+      locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     setContentView(R.layout.activity_list);
 
     lastLocation = null;
@@ -63,11 +65,16 @@ public class ListActivity extends Activity
     DealerListAdapter tmpDealerListAdapter = new DealerListAdapter(this, new ArrayList<Dealer>());
     listView.setAdapter(tmpDealerListAdapter);
 
-    // Load dealers initially
-    loadDealersInBackground();
   }
 
-  @Override
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getLocationManager().requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+        getLocationManager().requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+    }
+
+    @Override
   protected void onPause() {
     getLocationManager().removeUpdates(this);
     super.onPause();
@@ -78,8 +85,7 @@ public class ListActivity extends Activity
     Log.i(LOGTAG, "Start Refreshing");
     swipeRefreshLayout.setRefreshing(true);
     Log.i(LOGTAG, "request location updates");
-    getLocationManager().requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-    getLocationManager().requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+      getSpiceManager().execute(dealersDownloadRequest, this);
   }
 
   private void handleListViewItemOnItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -90,24 +96,19 @@ public class ListActivity extends Activity
     startActivity(tmpIntent);
   }
 
-
-  @Override
-  public Loader<DealersList> onCreateLoader(int id, Bundle args) {
-    if (lastLocation == null) {
-      lastLocation = getLocationManager().getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-    }
-    Log.i(LOGTAG, "onCreateLoader  " + lastLocation + " TWO KILOMETERS");
-    return new DealersDownloadTask(getApplicationContext(), lastLocation, Radius.TWO_KILOMETERS, this);
-  }
-
   private LocationManager getLocationManager() {
     if (locationManager == null)
       locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     return locationManager;
   }
 
-  @Override
-  public void onLoadFinished(Loader<DealersList> loader, DealersList data) {
+    @Override
+    public void onRequestFailure(SpiceException spiceException) {
+        //TODO
+    }
+
+    @Override
+    public void onRequestSuccess(DealersList data) {
     Log.i(LOGTAG, "loader finished");
     swipeRefreshLayout.setRefreshing(false);
     if (data == null) {
@@ -125,18 +126,14 @@ public class ListActivity extends Activity
     tmpListAdapter.notifyDataSetChanged();
   }
 
-  @Override
-  public void onLoaderReset(Loader<DealersList> loader) {
-
-  }
-
   public void onLocationChanged(final Location pLoc) {
     Log.i(LOGTAG, "location changed");
     lastLocation = pLoc;
     getLocationManager().removeUpdates(this);
 
     Log.i(LOGTAG, "init loader");
-    getLoaderManager().initLoader(0, null, this);
+      dealersDownloadRequest = new DealersDownloadRequest(lastLocation, Radius.TWO_KILOMETERS);
+      loadDealersInBackground();
 
   }
 
