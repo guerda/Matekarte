@@ -1,5 +1,9 @@
 Matekarte
 =========
+Status
+------
+Unfortunately, matekarte.de is discontinued due to personal reasons. A successor is already established, which is found under [matemonkey.com](http://www.matemonkey.com). Currently, this project here is dead, but I will try to look into the [Matemonkey API](https://github.com/MateMonkey/api) to switch to this provider.
+
 Description
 -----------
 Android client for [Matekarte](https://www.matekarte.de/), which lets you find
